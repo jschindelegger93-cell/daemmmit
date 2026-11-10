@@ -1,0 +1,52 @@
+---
+title: "RS3 Rohrschalen"
+typ: "produkt"
+kategorie: "technik"
+marke: "Thermowool"
+kurz: "Präzise geschnittene Steinwolle-Rohrschalen ohne Kaschierung für Rohrleitungen."
+bild: "../../assets/img/produkte/rs3.jpg"
+anwendung:
+  - "Rohrleitungen"
+  - "Industrie- und Haustechnik"
+vorteile:
+  - "λ = 0,040 W/mK"
+  - "Nicht brennbar (A1)"
+  - "Bis 250 °C einsetzbar"
+  - "AS-Qualität nach AGI Q 135"
+daten:
+  - label: "Wärmeleitfähigkeit λ"
+    wert: "0,040 W/(m·K) (DIN 52613 / EN ISO 8497)"
+  - label: "Brandverhalten"
+    wert: "A1, nicht brennbar (DIN EN 13501-1)"
+  - label: "Max. Anwendungstemperatur"
+    wert: "250 °C"
+  - label: "Rohdichte"
+    wert: "80 kg/m³"
+  - label: "Schmelzpunkt"
+    wert: "über 1000 °C"
+varianten:
+  - name: "Dämmdicke 20 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 30 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 40 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 50 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 60 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 70 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 80 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+  - name: "Dämmdicke 100 mm"
+    info: "Rohrdurchmesser 15–159 mm, bitte bei Bestellung angeben"
+einheit: "Laufmeter"
+preisHinweis: "Verbindlicher Preis im persönlichen Angebot – abhängig von Menge und Dicke"
+top: false
+sort: 130
+quelle: "https://www.thermowool.at/produkt/warmedammung-fur-rohre-warmedammung-fur-rohre/"
+seoTitle: "RS3 Rohrschalen kaufen | Dämm-Mit Stockerau"
+seoDescription: "Präzise geschnittene Steinwolle-Rohrschalen ohne Kaschierung für Rohrleitungen. Jetzt bei Dämm-Mit anfragen."
+---
+RS3 Rohrschalen sind die unkaschierte Variante – etwa wenn ohnehin ein Blechmantel montiert wird.

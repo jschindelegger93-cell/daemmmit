@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Head from '../../components/Head.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Cta from '../../components/Cta.astro';
+const produkte = (await getCollection('produkte')).sort((a, b) => a.data.sort - b.data.sort);
+const crumbs = [{ name: 'Shop', url: '/shop/' }];
+const hochbau = produkte.filter((p) => p.data.kategorie === 'hochbau');
+const lam = (p: any) => p.data.daten?.find((d: any) => d.label.startsWith('Wärmeleit'))?.wert.split(' ')[0] ?? '–';
+const schema = [{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Dämm-Mit Shop', itemListElement: produkte.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.data.title, url: new URL(`/shop/${p.id}/`, Astro.site).href })) }];
+---
+<Base title="Shop: Dämmstoffe, Sammelsäcke & Mietgerät | Dämm-Mit" description="Glaswolle für Dach, Decke und Wand, Steinwolle-Rohrschalen, Sammelsäcke für Mineralwolle und Schneidgerät zur Miete. Bestellen, Angebot erhalten, auf Rechnung zahlen." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="Online-Shop" title="Dämmstoffe, Sammelsäcke und Mietgerät"
+    answer="Im Dämm-Mit Shop bestellen Sie Sammelsäcke für die Entsorgung, mieten das Schneidgerät (50 €/Tag) und kaufen Glaswolle und Steinwolle von Thermowool. Sie senden Ihren Warenkorb als Bestellanfrage und erhalten ein persönliches Angebot – bezahlt wird nach Rechnung."
+    facts={[`${produkte.length} Produkte & Leistungen`, 'Nicht brennbare Mineralwolle (A1/A2)', 'Zahlung nach Rechnung']} />
+
+  <section class="sec" data-shop>
+    <div class="wrap">
+      <div class="filter" role="group" aria-label="Kategorie filtern">
+        <button class="chip" type="button" data-f="alle" aria-pressed="true">Alle</button>
+        <button class="chip" type="button" data-f="entsorgung" aria-pressed="false"><Icon name="recycle" />Entsorgung & Zubehör</button>
+        <button class="chip" type="button" data-f="hochbau" aria-pressed="false"><Icon name="layers" />Glaswolle Hochbau</button>
+        <button class="chip" type="button" data-f="technik" aria-pressed="false"><Icon name="flame" />Technische Isolierung</button>
+        <label class="sr" for="sort">Sortierung</label>
+        <select id="sort" data-sort><option value="empf">Empfohlen</option><option value="preis">Preis aufsteigend</option></select>
+      </div>
+      <div class="grid g4" data-grid>{produkte.map((p) => <ProductCard p={p} />)}</div>
+      <div class="empty" data-empty hidden><h3>Keine Produkte in dieser Auswahl</h3><div class="btns" style="justify-content:center"><button class="btn btn--out" type="button" data-reset>Filter zurücksetzen</button><button class="btn btn--pri" type="button" data-modal>Beratung anfragen</button></div></div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <Head eyebrow="Vergleich" title="Welche Glaswolle wofür?" text="Je kleiner der Lambda-Wert, desto besser dämmt das Material bei gleicher Dicke." />
+      <div class="tbl-w">
+        <table>
+          <thead><tr><th>Produkt</th><th>λ (W/mK)</th><th>Einsatz</th><th>Form</th><th></th></tr></thead>
+          <tbody>{hochbau.map((p) => <tr><th scope="row">{p.data.title}</th><td>{lam(p)}</td><td>{(p.data.anwendung ?? []).slice(0, 2).join(', ')}</td><td>{p.data.einheit}</td><td><a class="tlink" href={`/shop/${p.id}/`}>Ansehen <Icon name="arrow" /></a></td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="swipe">← Tabelle seitlich wischen →</p>
+      <div class="grid g2" style="margin-top:24px">
+        <div class="box"><h3>Kombinierbar</h3><p style="margin:0">Alte Dämmung entsorgen und neue bestellen: Legen Sie Sammelsäcke und Dämmstoff in denselben Warenkorb. Wir stimmen Lieferung und Abholung aufeinander ab.</p></div>
+        <div class="box box--acc"><h3>So funktioniert die Bestellung</h3><p style="margin:0">Warenkorb absenden → persönliches Angebot mit verbindlichem Preis und Lieferzeit → Sie bestätigen → Zahlung nach Rechnung.</p></div>
+      </div>
+    </div>
+  </section>
+  <Cta title="Unsicher, welches Produkt passt?" text="Sagen Sie uns Bauteil und Fläche. Wir empfehlen Produkt, Dicke und Menge – und rechnen die Entsorgung der alten Dämmung gleich mit." label="shop-abschluss" />
+</Base>

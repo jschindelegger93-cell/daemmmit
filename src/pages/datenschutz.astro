@@ -1,0 +1,20 @@
+---
+import Legal from '../components/Legal.astro';
+import s from '../data/settings.json';
+---
+<Legal title="Datenschutz" slug="datenschutz">
+  <p><span class="ph">[PLATZHALTER – Diese Struktur ist ein Entwurf und ersetzt keine rechtliche Prüfung. Bitte vor Go-live von einer Fachperson finalisieren.]</span></p>
+  <h2>1. Verantwortlicher</h2>
+  <p>{s.firma}, {s.strasse}, {s.plz} {s.ort} · {s.email} · {s.telefon}</p>
+  <h2>2. Welche Daten wir verarbeiten</h2>
+  <ul><li>Anfragen über Beratungsformular, Kontaktformular und Bestellanfrage (Name, Telefon, E-Mail, Adresse, Angaben zum Projekt)</li><li>Technische Zugriffsdaten (Server-Logs des Hosters)</li></ul>
+  <h2>3. Zweck und Rechtsgrundlage</h2>
+  <p>Bearbeitung Ihrer Anfrage und Vertragsanbahnung (Art. 6 Abs. 1 lit. b DSGVO), berechtigtes Interesse am sicheren Betrieb der Website (lit. f), Einwilligung für Statistik-Cookies (lit. a).</p>
+  <h2>4. Hosting und Formulare</h2>
+  <p>Die Website wird bei Netlify gehostet; Formulare werden über Netlify Forms verarbeitet. <span class="ph">[PLATZHALTER: Auftragsverarbeitung, Drittlandübermittlung]</span></p>
+  <h2>5. Cookies und Statistik</h2>
+  <p>Notwendige Speicherungen (z. B. Warenkorb, Cookie-Entscheidung) erfolgen lokal in Ihrem Browser. Statistik-Dienste werden nur nach Zustimmung geladen. <span class="ph">[PLATZHALTER: eingesetzte Dienste]</span></p>
+  <h2>6. Speicherdauer</h2><p><span class="ph">[PLATZHALTER]</span></p>
+  <h2>7. Ihre Rechte</h2>
+  <p>Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch sowie Beschwerde bei der österreichischen Datenschutzbehörde (dsb.gv.at).</p>
+</Legal>

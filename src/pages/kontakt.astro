@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import s from '../data/settings.json';
+const crumbs = [{ name: 'Kontakt', url: '/kontakt/' }];
+const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${s.strasse}, ${s.plz} ${s.ort}`)}`;
+const schema = [{ '@context': 'https://schema.org', '@type': 'ContactPage', mainEntity: { '@id': new URL('/#organisation', Astro.site).href } }];
+---
+<Base title="Kontakt & Anfahrt | Dämm-Mit EA GmbH, Stockerau" description="Dämm-Mit EA GmbH, Windparkstraße 8, 2000 Stockerau. Telefon 0664 / 610 68 80. Anlieferung und Abholung von Mineralwolle nach Vereinbarung." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="Kontakt" title="Sprechen wir über Ihre Dämmung"
+    answer={`Sie erreichen die ${s.firma} unter ${s.telefon} oder ${s.email}. Die Sammelstelle liegt in der ${s.strasse}, ${s.plz} ${s.ort}. Anlieferung und Abholung erfolgen nach Vereinbarung.`} />
+  <section class="sec" style="padding-top:40px">
+    <div class="wrap layout">
+      <form class="card card--sh" name="kontakt" method="POST" action="/danke/" data-netlify="true" netlify-honeypot="bot-field" data-ajax>
+        <input type="hidden" name="form-name" value="kontakt" />
+        <p class="hp"><label>Nicht ausfüllen: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <h2 style="font-size:1.5rem">Nachricht senden</h2>
+        <div class="frow"><div class="field"><label for="k-name">Name *</label><input id="k-name" name="name" type="text" autocomplete="name" required /></div><div class="field"><label for="k-tel">Telefon *</label><input id="k-tel" name="telefon" type="tel" inputmode="tel" autocomplete="tel" required /></div></div>
+        <div class="field"><label for="k-mail">E-Mail</label><input id="k-mail" name="email" type="email" inputmode="email" autocomplete="email" /></div>
+        <div class="field"><label for="k-thema">Thema</label><select id="k-thema" name="thema"><option>Mineralwolle entsorgen</option><option>Dämmstoff kaufen</option><option>Schneidgerät mieten</option><option>Gewerbe-Angebot</option><option>Recycling / Partnerschaft</option><option>Sonstiges</option></select></div>
+        <div class="field"><label for="k-msg">Nachricht *</label><textarea id="k-msg" name="nachricht" required placeholder="Material, ungefähre Menge, Ort …"></textarea></div>
+        <label class="check"><input type="checkbox" name="datenschutz" value="ja" required /><span>Ich stimme der Verarbeitung meiner Angaben laut <a href="/datenschutz/" target="_blank">Datenschutzerklärung</a> zu.</span></label>
+        <p class="err" role="alert" data-err></p>
+        <button class="btn btn--pri btn--lg" type="submit">Nachricht senden <Icon name="arrow" class="icon--arr" /></button>
+      </form>
+      <aside class="aside">
+        <div class="card">
+          <h3>{s.firma}</h3>
+          <p>{s.strasse}<br />{s.plz} {s.ort}</p>
+          <p><a class="tlink" href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="kontakt"><Icon name="phone" />{s.telefon}</a><br /><a class="tlink" href={`mailto:${s.email}`}><Icon name="mail" />{s.email}</a></p>
+          <p class="small"><Icon name="clock" class="" /> {s.oeffnungszeiten}<br /><span class="ph">[PLATZHALTER: fixe Öffnungszeiten, falls vorhanden]</span></p>
+          <a class="btn btn--out btn--block" href={maps} target="_blank" rel="noopener" data-track="cta_click" data-label="route"><Icon name="pin" />Route planen</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

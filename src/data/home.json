@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "eyebrow": "Mineralwolle · Entsorgung, Recycling & Dämmstoffe",
+    "h1": "Alte Mineralwolle {richtig entsorgen} – neue Dämmung {direkt mitnehmen}",
+    "text": "Wir sammeln Glaswolle und Steinwolle von Privat und Gewerbe und rechnen nach verwogenem Gewicht ab: 1,50 €/kg statt Pauschalpreis. Neue Dämmstoffe bekommen Sie im selben Shop.",
+    "bullets": ["Abrechnung nach tatsächlichem Gewicht", "Anlieferung, Abholung oder Absaugung", "Sammelstelle in Stockerau"],
+    "karteTitel": "1,50 €/kg",
+    "karteText": "verwogen, inkl. MwSt. · Privatkunden",
+    "bildunterschrift": "Zuschnitt mit Absaugung – Schneidgerät zur Miete"
+  },
+  "inhaber": {
+    "zitat": "[PLATZHALTER – persönliches Zitat von DI Alfred Eilmer, 1–2 Sätze: warum er Mineralwolle im Kreislauf halten will]",
+    "text": "Dipl.-Ing. Alfred Eilmer führt die Dämm-Mit EA GmbH in Stockerau. Das Unternehmen bringt jahrzehntelange Erfahrung mit Dämmstoffen mit und sammelt Mineralwolle von Privat- und Gewerbekunden – alt oder neu."
+  }
+}

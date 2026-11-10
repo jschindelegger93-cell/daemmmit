@@ -1,0 +1,50 @@
+{
+  "gruppen": [
+    {
+      "titel": "Entsorgung & Ablauf",
+      "fragen": [
+        { "frage": "Was kostet die Entsorgung von Glaswolle oder Steinwolle?", "antwort": "Privatkunden zahlen 1,50 € pro Kilogramm verwogenem Material, inklusive MwSt. Bei Abholung kommen die Fahrtkosten dazu (Richtpreis 1,20 €/km von/nach Stockerau). Preise für Gewerbekunden hängen von Tätigkeitsfeld und Menge ab und werden individuell angeboten.", "start": true },
+        { "frage": "Wie läuft die Entsorgung ab?", "antwort": "Sie bauen die Dämmung aus, füllen sie sortenrein in unsere Sammelsäcke und bringen sie nach Terminvereinbarung nach Stockerau – oder wir holen die Säcke innerhalb einer Woche bei Ihnen ab. Wir wiegen das Material, Sie zahlen nur das tatsächliche Gewicht.", "start": true },
+        { "frage": "Warum muss ich Ihre Sammelsäcke verwenden?", "antwort": "Wir übernehmen Mineralwolle ausschließlich in unseren eigenen Säcken. So bleibt das Material sortenrein, sauber verpackt und lässt sich eindeutig verwiegen. Die Säcke bestellen Sie im Shop.", "start": true },
+        { "frage": "Kann ich auch lose Dämmung absaugen lassen?", "antwort": "Die Absaugung vor Ort ist für größere Mengen gedacht und derzeit in Vorbereitung. Wir saugen das Material ab, wiegen es und nehmen es mit. Abgerechnet werden Entsorgung pro kg, Stundenaufwand und Anfahrt. Fragen Sie Ihr Projekt gern schon jetzt an." },
+        { "frage": "Wie schnell holen Sie ab?", "antwort": "Die Abholung erfolgt innerhalb einer Woche nach Vereinbarung. Wir brauchen dafür Ihre Abholadresse und die ungefähre Anzahl der Säcke." },
+        { "frage": "Holen Sie auch außerhalb von Stockerau ab?", "antwort": "Ja. Die Fahrt wird nach Kilometern von und nach Stockerau verrechnet (Richtpreis 1,20 €/km). Ob sich die Abholung für Ihre Menge rechnet, sagen wir Ihnen ehrlich am Telefon." }
+      ]
+    },
+    {
+      "titel": "Material & Sortenreinheit",
+      "fragen": [
+        { "frage": "Wie unterscheide ich Glaswolle von Steinwolle?", "antwort": "Glaswolle ist gelblich, hell, leicht und langfasrig. Steinwolle ist eher grünlich bis grau, hat kürzere Fasern und liegt meist als Platte vor. Im Zweifel schicken Sie uns ein Foto.", "start": true },
+        { "frage": "Was passiert, wenn Glas- und Steinwolle gemischt sind?", "antwort": "Gemischtes Material können wir nur mit höherem Aufwand verwerten. Deshalb verrechnen wir dafür 50 % Aufschlag. Getrennt sammeln lohnt sich also.", "start": true },
+        { "frage": "Was bedeutet KMF und TEL-Wolle?", "antwort": "KMF steht für künstliche Mineralfasern – der Fachbegriff für Glaswolle, Steinwolle und verwandte Dämmstoffe. TEL-Wolle ist ein älterer Handelsname für Glaswolle. Wir übernehmen alle drei." },
+        { "frage": "Nehmen Sie auch alte Mineralwolle (vor 1998)?", "antwort": "Ja, wir sammeln Mineralwolle alt oder neu. Bei älterem Material sind Schutzmaßnahmen beim Ausbau besonders wichtig: Atemschutz, Schutzbrille, geschlossene Kleidung, staubarm arbeiten und sofort einsacken." },
+        { "frage": "Darf Folie, Karton oder Gipskarton mit in den Sack?", "antwort": "Nein. In den Sack gehört nur die Mineralwolle selbst. Kaschierungen und Fremdstoffe sprechen Sie bitte vorab mit uns ab – [PLATZHALTER: genaue Annahmebedingungen]." }
+      ]
+    },
+    {
+      "titel": "Deponieverbot 2027",
+      "fragen": [
+        { "frage": "Was ändert sich am 1.1.2027?", "antwort": "Ab 1. Jänner 2027 darf Mineralwolle in Österreich nicht mehr deponiert werden. Glas- und Steinwolle müssen getrennt gesammelt und verwertet werden. Für Bauherren, Sanierer und Betriebe heißt das: Der bisher übliche Weg auf die Deponie fällt weg.", "start": true },
+        { "frage": "Betrifft mich das als Privatperson?", "antwort": "Ja, sobald bei Ihnen Mineralwolle anfällt – etwa bei der Dachboden- oder Fassadensanierung. Sie brauchen dann einen Übernehmer, der das Material einer Verwertung zuführt. Genau dafür gibt es MIN-REC.", "start": true },
+        { "frage": "Was wird aus der gesammelten Mineralwolle?", "antwort": "Sortenrein gesammelte Mineralwolle wird zerkleinert und kann wieder eingeschmolzen werden. Dämm-Mit arbeitet dafür am Verfahren der induktiven Glasschmelze. Details finden Sie auf der Seite Recycling." }
+      ]
+    },
+    {
+      "titel": "Shop & Bestellung",
+      "fragen": [
+        { "frage": "Wie bestelle ich im Shop?", "antwort": "Legen Sie Produkte in den Warenkorb und senden Sie Ihre Bestellanfrage ab. Sie erhalten von uns ein persönliches Angebot mit verbindlichem Preis und Lieferzeit. Bezahlt wird erst nach Rechnung.", "start": true },
+        { "frage": "Warum stehen bei den Dämmstoffen keine Preise?", "antwort": "Dämmstoffpreise hängen von Menge, Dicke und Lieferart ab. Statt Listenpreisen bekommen Sie ein Angebot für genau Ihre Menge – meist günstiger als ein Pauschalpreis." },
+        { "frage": "Welche Dämmstoffe führen Sie?", "antwort": "Wir führen Glaswolle für den Hochbau (Dach, Decke, Trennwand, Fassade, Kellerdecke) und Steinwolle für die technische Isolierung (Rohrschalen, Lamellenmatten, Dämmsegmente) von Thermowool." },
+        { "frage": "Kann ich das Schneidgerät mieten?", "antwort": "Ja. Das Schneidgerät mit Absaugung kostet 50 € pro Tag und lohnt sich bei größeren Mengen. Verfügbarkeit bitte anfragen." },
+        { "frage": "Gibt es ein Rücktrittsrecht?", "antwort": "Für Verbraucher gilt das gesetzliche Rücktrittsrecht von 14 Tagen. Ausgenommen sind Sonderanfertigungen und Waren, die sich nicht für eine Rücksendung eignen. Details stehen in den AGB." }
+      ]
+    },
+    {
+      "titel": "Gewerbe",
+      "fragen": [
+        { "frage": "Welche Preise gelten für Gewerbekunden?", "antwort": "Die Preise richten sich nach Tätigkeitsfeld und Menge. Schicken Sie uns kurz Ihre Eckdaten, Sie bekommen ein individuelles Angebot." },
+        { "frage": "Bekomme ich einen Entsorgungsnachweis?", "antwort": "[PLATZHALTER: Angaben zu Übernahmeschein / Begleitschein und Abfallschlüsselnummern bitte durch Dämm-Mit bestätigen.]" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import s from '../data/settings.json';
+---
+<div class="calc" data-calc data-kg={s.preisKg} data-km={s.preisKm} data-misch={s.aufschlagMisch}>
+  <form class="calc__f" onsubmit="return false">
+    <p class="flabel">Welches Material?</p>
+    <div class="seg" style="margin-bottom:16px">
+      <label><input type="radio" name="c-mat" value="glas" checked /><span>Glaswolle</span></label>
+      <label><input type="radio" name="c-mat" value="stein" /><span>Steinwolle</span></label>
+      <label><input type="radio" name="c-mat" value="misch" /><span>Gemischt</span></label>
+    </div>
+    <div class="frow">
+      <div class="field"><label for="c-m2">Fläche in m²</label><input id="c-m2" type="number" inputmode="decimal" min="0" value="100" /></div>
+      <div class="field"><label for="c-cm">Dämmdicke in cm</label><input id="c-cm" type="number" inputmode="decimal" min="0" value="20" /></div>
+    </div>
+    <div class="field"><label for="c-kg">Oder Gewicht direkt in kg <small>(falls bekannt)</small></label><input id="c-kg" type="number" inputmode="decimal" min="0" placeholder="z. B. 250" /></div>
+    <p class="flabel">Wie kommt das Material zu uns?</p>
+    <div class="seg" style="margin-bottom:16px">
+      <label><input type="radio" name="c-var" value="anlieferung" checked /><span>Ich liefere an</span></label>
+      <label><input type="radio" name="c-var" value="abholung" /><span>Bitte abholen</span></label>
+    </div>
+    <div class="field" data-kmfield hidden><label for="c-km">Entfernung nach Stockerau in km (einfach)</label><input id="c-km" type="number" inputmode="decimal" min="0" value="30" /></div>
+    <p class="flabel">Beispiele</p>
+    <ul class="chips">
+      <li><button class="chip" type="button" data-ex="100,20,glas">Dachboden 100 m²</button></li>
+      <li><button class="chip" type="button" data-ex="15,7.5,glas">Trennwand 15 m²</button></li>
+      <li><button class="chip" type="button" data-ex="60,12,stein">Fassade 60 m²</button></li>
+    </ul>
+  </form>
+  <div class="calc__r" aria-live="polite">
+    <h3>Ihre geschätzten Kosten</h3>
+    <div class="calc__sum" data-out="sum">–</div>
+    <ul class="calc__rows">
+      <li><span>Geschätztes Gewicht</span><b data-out="kg">–</b></li>
+      <li><span>Entsorgung ({s.preisKg.toFixed(2).replace('.', ',')} €/kg)</span><b data-out="ent">–</b></li>
+      <li data-row="misch" hidden><span>Aufschlag Mischmaterial (+{s.aufschlagMisch} %)</span><b data-out="misch">–</b></li>
+      <li data-row="km" hidden><span>Abholung (hin & retour)</span><b data-out="fahrt">–</b></li>
+      <li><span>Zum Vergleich: Pauschalsack (2–4 €/kg)</span><b data-out="vgl">–</b></li>
+    </ul>
+    <p class="small" style="color:#c9dcd8">Richtwert für Privatkunden inkl. MwSt. Gewicht geschätzt (Glaswolle ca. 20 kg/m³, Steinwolle ca. 50 kg/m³). Verrechnet wird das verwogene Gewicht.</p>
+    <button class="btn btn--pri btn--block" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-from-calc data-track="cta_click" data-label="rechner">Mit diesen Werten anfragen <Icon name="arrow" class="icon--arr" /></button>
+    <p class="small" style="color:#c9dcd8;text-align:center;margin:8px 0 0">Kostenlos und ohne Anmeldung</p>
+  </div>
+</div>

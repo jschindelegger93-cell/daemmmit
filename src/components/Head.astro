@@ -1,0 +1,10 @@
+---
+const { eyebrow, title, text, center = false, h = 'h2' } = Astro.props;
+const H = h;
+---
+<div class:list={['head', { 'head--c': center }]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <H>{title}</H>
+  {text && <p class="lead">{text}</p>}
+  <slot />
+</div>

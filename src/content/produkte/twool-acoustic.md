@@ -1,0 +1,53 @@
+---
+title: "TWOOL ACOUSTIC"
+typ: "produkt"
+kategorie: "hochbau"
+marke: "Thermowool"
+kurz: "Trennwand-Klemmfilz für Trockenbauwände: hohe Schalldämmung, nicht brennbar, in Einbaubreite 625 oder 600 mm."
+bild: "../../assets/img/produkte/acoustic.jpg"
+anwendung:
+  - "Trockenbau-Trennwände"
+  - "Gipskarton- und Gipsfaserplatten"
+  - "Schallschutz zwischen Räumen"
+vorteile:
+  - "Rollenbreite = Einbaubreite"
+  - "Hohe Schalldämmung"
+  - "Nicht brennbar (A1)"
+  - "2 Stück pro Rolle"
+daten:
+  - label: "Wärmeleitfähigkeit λ"
+    wert: "0,039 W/mK (EN 12667)"
+  - label: "Brandverhalten"
+    wert: "Euroklasse A1, nicht brennbar (EN 13501-1)"
+  - label: "Strömungswiderstand"
+    wert: "≥ 5 kPa·s/m² (EN 29053)"
+  - label: "Breite"
+    wert: "625 mm oder 600 mm"
+  - label: "Verpackung"
+    wert: "2 Stück pro Rolle, 24 Rollen pro Palette"
+varianten:
+  - name: "40 mm × 625"
+    info: "9000 mm lang · 22,50 m²/Rolle"
+  - name: "50 mm × 625"
+    info: "7500 mm lang · 18,75 m²/Rolle"
+  - name: "50 mm × 600"
+    info: "7500 mm lang · 18,00 m²/Rolle"
+  - name: "60 mm × 625"
+    info: "6500 mm lang · 16,25 m²/Rolle"
+  - name: "75 mm × 625"
+    info: "9000 mm lang · 11,25 m²/Rolle"
+  - name: "75 mm × 600"
+    info: "9000 mm lang · 10,80 m²/Rolle"
+  - name: "100 mm × 625"
+    info: "7500 mm lang · 9,38 m²/Rolle"
+  - name: "100 mm × 600"
+    info: "7500 mm lang · 9,00 m²/Rolle"
+einheit: "Rolle"
+preisHinweis: "Verbindlicher Preis im persönlichen Angebot – abhängig von Menge und Dicke"
+top: true
+sort: 70
+quelle: "https://www.thermowool.at/produkt/beste-schalldammung-wandwolle-akustik/"
+seoTitle: "TWOOL ACOUSTIC kaufen | Dämm-Mit Stockerau"
+seoDescription: "Trennwand-Klemmfilz für Trockenbauwände: hohe Schalldämmung, nicht brennbar, in Einbaubreite 625 oder 600 mm. Jetzt bei Dämm-Mit anfragen."
+---
+TWOOL ACOUSTIC wird zwischen die Ständerprofile von Trockenbauwänden geklemmt. Die Rollenbreite entspricht der Einbaubreite, es muss also nicht längs geschnitten werden.

@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+const { items = [] } = Astro.props;
+---
+<div class="faq">
+  {items.map((f: any) => (
+    <details data-track="faq_open" data-label={f.frage}>
+      <summary>{f.frage}<Icon name="plus" /></summary>
+      <div class="a"><p>{f.antwort}</p></div>
+    </details>
+  ))}
+</div>

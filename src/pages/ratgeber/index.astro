@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import Cta from '../../components/Cta.astro';
+const artikel = await getCollection('ratgeber');
+const crumbs = [{ name: 'Ratgeber', url: '/ratgeber/' }];
+const schema = [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Dämm-Mit Ratgeber', url: new URL('/ratgeber/', Astro.site).href, blogPost: artikel.map((a) => ({ '@type': 'BlogPosting', headline: a.data.title, url: new URL(`/ratgeber/${a.id}/`, Astro.site).href, datePublished: a.data.datum.toISOString() })) }];
+---
+<Base title="Ratgeber: Mineralwolle entsorgen & richtig dämmen | Dämm-Mit" description="Deponieverbot 2027, Kosten, Glaswolle oder Steinwolle erkennen, sicher ausbauen, Dachboden dämmen: der Ratgeber von Dämm-Mit aus Stockerau." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="Ratgeber" title="Wissen rund um Mineralwolle"
+    answer="Hier finden Sie klare Antworten zu Entsorgung, Recycling und Dämmung: was ab 2027 gilt, was die Entsorgung kostet, wie Sie Glas- von Steinwolle unterscheiden und welche Dämmung auf den Dachboden gehört." />
+  <section class="sec" style="padding-top:40px">
+    <div class="wrap grid g3">
+      {artikel.map((a) => (
+        <a class="card tile" href={`/ratgeber/${a.id}/`}><span class="badge">{a.data.kategorie}</span><h2 style="font-size:1.25rem;margin:10px 0 0">{a.data.title}</h2><p>{a.data.kurz}</p><span class="tlink">Lesen · {a.data.lesezeit} Min. <Icon name="arrow" /></span></a>
+      ))}
+    </div>
+  </section>
+  <Cta title="Frage nicht dabei?" text="Rufen Sie an oder schreiben Sie uns. Wir antworten persönlich – und ehrlich." label="ratgeber-abschluss" />
+</Base>

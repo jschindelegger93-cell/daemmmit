@@ -1,0 +1,205 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Head from '../components/Head.astro';
+import Faq from '../components/Faq.astro';
+import Rechner from '../components/Rechner.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Vergleich from '../components/Vergleich.astro';
+import Cta from '../components/Cta.astro';
+import s from '../data/settings.json';
+import home from '../data/home.json';
+import faq from '../data/faq.json';
+import heroImg from '../assets/img/site/schneidgeraet.png';
+import appImg from '../assets/img/site/app-basic.jpg';
+
+const produkte = (await getCollection('produkte')).sort((a, b) => a.data.sort - b.data.sort);
+const top = produkte.filter((p) => p.data.top && p.data.typ === 'produkt').slice(0, 4);
+const artikel = (await getCollection('ratgeber')).slice(0, 3);
+const startFaq = faq.gruppen.flatMap((g) => g.fragen).filter((f: any) => f.start).slice(0, 8);
+const h1 = home.hero.h1.replace(/\{(.+?)\}/g, '<mark>$1</mark>');
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: startFaq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })) },
+  { '@context': 'https://schema.org', '@type': 'HowTo', name: 'Mineralwolle bei MIN-REC entsorgen', step: [
+    { '@type': 'HowToStep', name: 'Sammelsäcke bestellen', text: 'Sammelsäcke im Shop bestellen oder Beratung anfragen.' },
+    { '@type': 'HowToStep', name: 'Sortenrein befüllen', text: 'Glaswolle und Steinwolle getrennt in die Säcke füllen.' },
+    { '@type': 'HowToStep', name: 'Anliefern oder abholen lassen', text: 'Nach Terminvereinbarung nach Stockerau bringen oder innerhalb einer Woche abholen lassen.' },
+    { '@type': 'HowToStep', name: 'Wiegen und bezahlen', text: 'Das Material wird verwogen, bezahlt wird nur das tatsächliche Gewicht.' } ] },
+];
+---
+<Base title="Mineralwolle entsorgen & Dämmstoffe kaufen | Dämm-Mit Stockerau" description="Glaswolle und Steinwolle richtig entsorgen: 1,50 €/kg nach Gewicht, Abholung oder Anlieferung in Stockerau. Dazu neue Dämmstoffe im Shop. Jetzt anfragen." schema={schema}>
+  <section class="hero">
+    <div class="wrap hero__g">
+      <div>
+        <p class="eyebrow">{home.hero.eyebrow}</p>
+        <h1 set:html={h1} />
+        <p class="lead">{home.hero.text}</p>
+        <div class="btns">
+          <button class="btn btn--pri btn--lg" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label="hero">Kostenlose Beratung anfragen <Icon name="arrow" class="icon--arr" /></button>
+          <a class="btn btn--out btn--lg" href="#rechner" data-track="cta_click" data-label="hero-preis">Entsorgung ab 1,50 €/kg berechnen</a>
+        </div>
+        <ul class="checks">{home.hero.bullets.map((b) => <li><Icon name="check" />{b}</li>)}</ul>
+      </div>
+      <figure class="hero__m" style="margin:0">
+        <div class="hero__img"><Image src={heroImg} alt="Mitarbeiterin schneidet Mineralwolle mit einem Schneidgerät mit Absaugung zu" widths={[400, 701]} sizes="(min-width:1024px) 560px, 92vw" loading="eager" fetchpriority="high" /></div>
+        <div class="fcard fcard--a"><span class="fcard__i"><Icon name="scale" /></span><div><b>{home.hero.karteTitel}</b><small>{home.hero.karteText}</small></div></div>
+        <div class="fcard fcard--b"><span class="avatar">{s.initialen}</span><div><b>{s.geschaeftsfuehrer}</b><small>Geschäftsführer · {s.ort}</small></div></div>
+        <figcaption>{home.hero.bildunterschrift}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="trust" aria-label="Auf einen Blick">
+    <div class="wrap trust__g">
+      <div class="trust__i"><span class="ibox"><Icon name="scale" /></span><div><b>Bezahlt wird das Gewicht</b><span>1,50 €/kg statt Pauschalsack</span></div></div>
+      <div class="trust__i"><span class="ibox"><Icon name="truck" /></span><div><b>Abholung in 1 Woche</b><span>oder selbst anliefern</span></div></div>
+      <div class="trust__i"><span class="ibox"><Icon name="recycle" /></span><div><b>Alt oder neu</b><span>Glas-, Stein-, TEL-Wolle</span></div></div>
+      <div class="trust__i"><span class="ibox"><Icon name="pin" /></span><div><b>Sammelstelle Stockerau</b><span>Privat & Gewerbe</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id="rechner">
+    <div class="wrap">
+      <Head eyebrow="Gratis-Rechner" title="Was kostet Ihre Entsorgung?" text="Fläche und Dämmdicke eingeben – Sie sehen sofort, womit Sie rechnen können. Und was derselbe Sack zum Pauschalpreis kosten würde." />
+      <div class="reveal"><Rechner /></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Wie können wir helfen?" title="Was möchten Sie tun?" center />
+      <div class="grid g3">
+        <button class="card tile reveal" type="button" data-modal data-kundentyp="Privat" data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label="kachel-privat"><span class="ibox"><Icon name="home" /></span><h3>Alte Dämmung privat entsorgen</h3><p>Dachboden, Zwischenwand, Fassade: einsacken, anliefern oder abholen lassen.</p><span class="tlink">Anfrage starten <Icon name="arrow" /></span></button>
+        <a class="card tile reveal" href="/gewerbe/" data-track="cta_click" data-label="kachel-gewerbe"><span class="ibox"><Icon name="building" /></span><h3>Baustelle & Gewerbe</h3><p>Verschnitt und Rückbaumaterial sortenrein abgeben. Preise nach Menge.</p><span class="tlink">Für Gewerbe <Icon name="arrow" /></span></a>
+        <a class="card tile reveal" href="/shop/?kat=hochbau" data-track="cta_click" data-label="kachel-kaufen"><span class="ibox"><Icon name="layers" /></span><h3>Neue Dämmung kaufen</h3><p>Glaswolle für Dach, Decke, Wand und Fassade – plus Rohrisolierung.</p><span class="tlink">Zum Shop <Icon name="arrow" /></span></a>
+        <a class="card tile reveal" href="/shop/sammelsack-mineralwolle/" data-track="cta_click" data-label="kachel-sack"><span class="ibox"><Icon name="bag" /></span><h3>Sammelsäcke bestellen</h3><p>Der erste Schritt jeder Entsorgung. Wir übernehmen nur diese Säcke.</p><span class="tlink">Säcke ansehen <Icon name="arrow" /></span></a>
+        <a class="card tile reveal" href="/shop/schneidgeraet-miete/" data-track="cta_click" data-label="kachel-miete"><span class="ibox"><Icon name="scissors" /></span><h3>Schneidgerät mieten</h3><p>Sauber zuschneiden mit Absaugung. 50 € pro Tag.</p><span class="tlink">Zur Miete <Icon name="arrow" /></span></a>
+        <a class="card tile reveal" href="/ratgeber/glaswolle-oder-steinwolle-erkennen/" data-track="cta_click" data-label="kachel-erkennen"><span class="ibox"><Icon name="search" /></span><h3>Glas- oder Steinwolle?</h3><p>In einer Minute erkennen, was Sie vor sich haben – und 50 % Aufschlag sparen.</p><span class="tlink">Zum Ratgeber <Icon name="arrow" /></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id="varianten">
+    <div class="wrap">
+      <Head eyebrow="Anliefern oder abholen?" title="Drei Wege – ein Preis pro Kilo" text="Die Entsorgung kostet immer 1,50 €/kg. Faustregel: Wer in der Nähe wohnt und transportieren kann, liefert an – alle anderen lassen abholen." center />
+      <div class="models">
+        <div class="model reveal">
+          <span class="badge">Günstigste Variante</span>
+          <span class="ibox"><Icon name="pin" /></span><h3 style="margin-top:12px">Selbst anliefern</h3>
+          <p class="price">1,50 € <small>/ kg inkl. MwSt.</small></p>
+          <ul class="checks"><li><Icon name="check" />Ideal für kleinere Mengen</li><li><Icon name="check" />Wiegen direkt in Stockerau</li><li><Icon name="check" />Termin nach Vereinbarung</li><li><Icon name="check" />Keine Fahrtkosten</li></ul>
+          <div class="model__b"><a class="btn btn--out" href="/shop/entsorgung-anlieferung/">Alles zur Anlieferung</a><button class="tlink" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-variante="Anlieferung" data-label="modell-anlieferung" data-track="cta_click">Termin anfragen <Icon name="arrow" /></button></div>
+        </div>
+        <div class="model model--rec reveal">
+          <span class="badge badge--acc">Am bequemsten</span>
+          <span class="ibox"><Icon name="truck" /></span><h3 style="margin-top:12px">Abholen lassen</h3>
+          <p class="price">1,50 € <small>/ kg + Abholung*</small></p>
+          <ul class="checks"><li><Icon name="check" />Ideal ohne Anhänger oder Zeit</li><li><Icon name="check" />Abholung innerhalb einer Woche</li><li><Icon name="check" />Wir wiegen jeden Sack</li><li><Icon name="check" />Sie zahlen nur das Gewicht</li></ul>
+          <div class="model__b"><button class="btn btn--sec" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-variante="Abholung" data-label="modell-abholung" data-track="cta_click">Abholung anfragen</button><a class="tlink" href="/shop/entsorgung-abholung/">Alles zur Abholung <Icon name="arrow" /></a></div>
+          <p class="small" style="margin:10px 0 0">* Richtpreis 1,20 €/km von/nach Stockerau</p>
+        </div>
+        <div class="model reveal">
+          <span class="badge badge--dark">In Vorbereitung</span>
+          <span class="ibox"><Icon name="wind" /></span><h3 style="margin-top:12px">Absaugen lassen</h3>
+          <p class="price">1,50 € <small>/ kg + Aufwand</small></p>
+          <ul class="checks"><li><Icon name="check" />Ideal für größere Mengen</li><li><Icon name="check" />Kein Einsacken nötig</li><li><Icon name="check" />Wiegen direkt vor Ort</li><li><Icon name="check" />Angebot nach Besichtigung</li></ul>
+          <div class="model__b"><a class="btn btn--out" href="/shop/entsorgung-absaugung/">Alles zur Absaugung</a><button class="tlink" type="button" data-modal data-leistung="Absaugung vor Ort" data-variante="Absaugung" data-label="modell-absaugung" data-track="cta_click">Projekt vormerken <Icon name="arrow" /></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Aus dem Shop" title="Alte Wolle raus, neue gleich mit" text="Sammelsäcke, Mietgerät und Glaswolle von Thermowool – alles aus einer Hand.">
+        <a class="tlink" href="/shop/">Alle Produkte ansehen <Icon name="arrow" /></a>
+      </Head>
+      <div class="scroller">{top.map((p) => <ProductCard p={p} />)}</div>
+      <p class="small" style="margin-top:14px">Dämmstoffpreise hängen von Menge und Dicke ab – den verbindlichen Preis erhalten Sie im persönlichen Angebot.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id="ablauf">
+    <div class="wrap">
+      <Head eyebrow="So läuft's ab" title="Vier Schritte, keine Vorauszahlung" text="Kein Pauschalpreis, kein Rätselraten: Sie wissen vorher, was ein Kilo kostet." center />
+      <ol class="steps">
+        <li class="reveal"><h3>Säcke bestellen</h3><p>Sammelsäcke im Shop in den Warenkorb legen oder gleich mit der Beratung anfragen.</p><span class="hl">2 Minuten online</span></li>
+        <li class="reveal"><h3>Sortenrein befüllen</h3><p>Glaswolle und Steinwolle getrennt einsacken, trocken lagern.</p><span class="hl">Spart 50 % Aufschlag</span></li>
+        <li class="reveal"><h3>Bringen oder abholen lassen</h3><p>Termin in Stockerau vereinbaren – oder wir kommen zu Ihnen.</p><span class="hl">Abholung in 1 Woche</span></li>
+        <li class="reveal"><h3>Wiegen & bezahlen</h3><p>Wir verwiegen Ihr Material. Sie zahlen das tatsächliche Gewicht nach Rechnung.</p><span class="hl">1,50 €/kg</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Warum jetzt?</p>
+        <h2>Ab 2027 ist die Deponie zu</h2>
+        <p class="lead">Ab 1. Jänner 2027 darf Mineralwolle in Österreich nicht mehr deponiert werden. Wer saniert, braucht einen Verwertungsweg.</p>
+        <div class="count" data-countdown="2027-01-01T00:00:00+01:00"><div><b data-days>–</b><span>Tage bis zum Verbot</span></div></div>
+        <div class="args">
+          <div class="arg"><span class="ibox"><Icon name="alert" /></span><div><h3>Das Verbot kommt fix</h3><p>Die Deponieverordnung erlaubt die Ablagerung nur noch bis 31. Dezember 2026.¹</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="scale" /></span><div><h3>Pauschalen werden teuer</h3><p>Pauschalsäcke kosten umgerechnet meist 2–4 € pro kg. Wir wiegen und verrechnen 1,50 €/kg.²</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="layers" /></span><div><h3>Trennen zahlt sich aus</h3><p>Nur sortenreines Material lässt sich wieder einschmelzen. Mischmaterial kostet 50 % mehr.</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="recycle" /></span><div><h3>Kreislauf statt Sondermüll</h3><p>Aus alter Wolle soll wieder Rohstoff werden – daran arbeiten wir mit der induktiven Glasschmelze.</p></div></div>
+        </div>
+        <p class="src">¹ Deponieverordnung 2008, § 10c; WKO, Newsletter Baurestmassen 01/2026. ² Laut min-rec.at, Privatkunden inkl. MwSt.</p>
+        <a class="tlink" href="/ratgeber/deponieverbot-mineralwolle-2027/">Alles zum Deponieverbot <Icon name="arrow" /></a>
+      </div>
+      <figure class="figure reveal" style="margin:0"><Image src={appImg} alt="Schnittbild: Glaswolle-Dämmung auf der obersten Geschossdecke" widths={[400, 800]} sizes="(min-width:960px) 560px, 92vw" /><figcaption>Oberste Geschossdecke: alte Dämmung raus, neue Glaswolle rein</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Ehrlicher Vergleich" title="Wohin mit der alten Mineralwolle?" text="Nicht jedes System nimmt jedes Material. Der Überblick." />
+      <div class="reveal"><Vergleich /></div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap owner">
+      <div class="owner__ph">{s.initialen}<small>[PLATZHALTER Foto: {s.geschaeftsfuehrer} an der Sammelstelle Stockerau]</small></div>
+      <div>
+        <p class="eyebrow">Wer dahinter steht</p>
+        <blockquote><span class="ph">{home.inhaber.zitat}</span></blockquote>
+        <p>{home.inhaber.text}</p>
+        <p class="sign">{s.geschaeftsfuehrer}<small>Geschäftsführer, {s.firma}</small></p>
+        <div class="btns" style="margin-top:16px"><a class="btn btn--out" href="/ueber-uns/">Über uns</a><button class="tlink" type="button" data-modal data-track="cta_click" data-label="inhaber">Persönlich beraten lassen <Icon name="arrow" /></button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Ratgeber" title="Wissen, das Geld spart">
+        <a class="tlink" href="/ratgeber/">Alle Ratgeber <Icon name="arrow" /></a>
+      </Head>
+      <div class="grid g3">
+        {artikel.map((a) => (
+          <a class="card tile reveal" href={`/ratgeber/${a.id}/`}><span class="badge">{a.data.kategorie}</span><h3>{a.data.title}</h3><p>{a.data.kurz}</p><span class="tlink">Lesen · {a.data.lesezeit} Min. <Icon name="arrow" /></span></a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <Head eyebrow="Abholgebiet" title="Von Stockerau aus unterwegs" text="Abholung nach Kilometern von und nach Stockerau. Typische Orte:" />
+      <ul class="chips">{s.einzugsgebiet.map((o) => <li><span class="chip chip--w"><Icon name="pin" />{o}</span></li>)}<li><button class="chip" type="button" data-modal data-track="cta_click" data-label="gebiet">Ihr Ort fehlt? Fragen Sie uns.</button></li></ul>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <Head eyebrow="Häufige Fragen" title="Kurz gefragt, klar beantwortet" />
+      <Faq items={startFaq} />
+      <p style="margin-top:20px"><a class="tlink" href="/faq/">Alle Fragen & Antworten <Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <Cta />
+</Base>

@@ -1,0 +1,15 @@
+---
+import Legal from '../components/Legal.astro';
+import s from '../data/settings.json';
+---
+<Legal title="Impressum" slug="impressum">
+  <h2>{s.firma}</h2>
+  <p>„MIN-REC“ Mineralwolle-Recycling<br />{s.strasse}<br />{s.plz} {s.ort}<br />{s.land}</p>
+  <p>Telefon: <a href={`tel:${s.telefonLink}`}>{s.telefon}</a><br />E-Mail: <a href={`mailto:${s.email}`}>{s.email}</a></p>
+  <p>Geschäftsführer: {s.geschaeftsfuehrer}<br />Firmenbuch: {s.firmenbuch}<br />Firmenbuchgericht / Gerichtsstand: {s.gericht}<br />UID: <span class="ph">{s.uid}</span></p>
+  <p><span class="ph">[PLATZHALTER: Unternehmensgegenstand, Kammerzugehörigkeit (WKO), Gewerbebehörde, anwendbare Rechtsvorschriften, Angaben nach § 25 MedienG]</span></p>
+  <h2>Online-Streitbeilegung</h2>
+  <p>Verbraucher können Beschwerden an die Online-Streitbeilegungsplattform der EU richten: <span class="ph">[PLATZHALTER Link/aktueller Hinweis]</span>.</p>
+  <h2>Bildnachweis</h2>
+  <p>Produktabbildungen: Thermowool. Weitere Abbildungen: {s.firma}. <span class="ph">[PLATZHALTER: Nutzungsrechte bestätigen]</span></p>
+</Legal>

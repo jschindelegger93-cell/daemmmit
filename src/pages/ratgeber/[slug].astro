@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import s from '../../data/settings.json';
+export async function getStaticPaths() {
+  const all = await getCollection('ratgeber');
+  return all.map((a) => ({ params: { slug: a.id }, props: { a, all } }));
+}
+const { a, all } = Astro.props;
+const d = a.data;
+const { Content } = await render(a);
+const crumbs = [{ name: 'Ratgeber', url: '/ratgeber/' }, { name: d.title, url: `/ratgeber/${a.id}/` }];
+const fmt = (x: Date) => x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
+const more = all.filter((x) => x.id !== a.id).slice(0, 3);
+const abs = (u: string) => new URL(u, Astro.site).href;
+const schema: any[] = [
+  { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.kurz, inLanguage: 'de-AT', datePublished: d.datum.toISOString(), dateModified: (d.aktualisiert ?? d.datum).toISOString(), mainEntityOfPage: abs(`/ratgeber/${a.id}/`), image: abs('/og.png'),
+    author: { '@type': 'Person', name: s.geschaeftsfuehrer, jobTitle: 'Geschäftsführer', worksFor: { '@id': abs('/#organisation') }, url: abs('/ueber-uns/') }, publisher: { '@id': abs('/#organisation') },
+    ...(d.quellen ? { citation: d.quellen.map((q) => q.url) } : {}) },
+];
+if (d.faq) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })) });
+---
+<Base title={d.seoTitle ?? d.title} description={d.seoDescription ?? d.kurz} crumbs={crumbs} schema={schema} noindex={d.noindex ?? false} ogType="article">
+  <section class="phero">
+    <div class="wrap">
+      <nav aria-label="Brotkrumen"><ol class="crumbs"><li><a href="/">Start</a></li><li><a href="/ratgeber/">Ratgeber</a></li><li><span aria-current="page">{d.title}</span></li></ol></nav>
+      <span class="badge">{d.kategorie}</span>
+      <h1 style="margin-top:12px;max-width:900px">{d.title}</h1>
+      <p class="small">Von {s.geschaeftsfuehrer} · Veröffentlicht <time datetime={d.datum.toISOString()}>{fmt(d.datum)}</time> · Zuletzt aktualisiert <time datetime={(d.aktualisiert ?? d.datum).toISOString()}>{fmt(d.aktualisiert ?? d.datum)}</time> · {d.lesezeit} Min. Lesezeit</p>
+      <div class="answer"><p><b>Kurz gesagt:</b> {d.antwort}</p></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:40px">
+    <div class="wrap layout">
+      <article>
+        <div class="prose"><Content /></div>
+        {d.faq && <><h2 style="margin-top:40px">Häufige Fragen</h2><Faq items={d.faq} /></>}
+        {d.quellen && <div class="src"><b>Quellen:</b><ul>{d.quellen.map((q) => <li><a href={q.url} rel="noopener nofollow">{q.titel}</a></li>)}</ul></div>}
+        <div class="card" style="margin-top:32px;flex-direction:row;gap:16px;align-items:center"><span class="avatar" style="width:56px;height:56px">{s.initialen}</span><div><b style="font-family:var(--fh)">{s.geschaeftsfuehrer}</b><p class="small" style="margin:0">Geschäftsführer der {s.firma}, Stockerau. <a href="/ueber-uns/">Mehr über uns</a></p></div></div>
+      </article>
+      <aside class="aside">
+        <div class="card card--sh">
+          <span class="badge badge--acc">Entsorgung</span>
+          <p class="price">1,50 € <small>/ kg</small></p>
+          <p class="small">Glas- und Steinwolle, verwogen, inkl. MwSt. (Privatkunden). Anlieferung oder Abholung.</p>
+          <button class="btn btn--pri btn--block" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label={`ratgeber:${a.id}`}>Kostenlose Beratung</button>
+          <a class="tlink" href="/entsorgung/#rechner" style="margin-top:6px">Kosten berechnen <Icon name="arrow" /></a>
+          <a class="tlink" href="/shop/">Zum Shop <Icon name="arrow" /></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <h2>Weiterlesen</h2>
+      <div class="grid g3">{more.map((m) => <a class="card tile" href={`/ratgeber/${m.id}/`}><span class="badge">{m.data.kategorie}</span><h3>{m.data.title}</h3><p>{m.data.kurz}</p><span class="tlink">Lesen <Icon name="arrow" /></span></a>)}</div>
+    </div>
+  </section>
+  <Cta label="artikel-abschluss" />
+</Base>

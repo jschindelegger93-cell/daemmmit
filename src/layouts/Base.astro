@@ -1,0 +1,254 @@
+---
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
+import s from '../data/settings.json';
+
+interface Props { title: string; description: string; crumbs?: { name: string; url: string }[]; schema?: any[]; noindex?: boolean; ogType?: string; }
+const { title, description, crumbs = [], schema = [], noindex = false, ogType = 'website' } = Astro.props;
+const site = Astro.site!;
+const canonical = new URL(Astro.url.pathname, site).href;
+const og = new URL('/og.png', site).href;
+const path = Astro.url.pathname;
+const abs = (u: string) => new URL(u, site).href;
+
+const org = {
+  '@context': 'https://schema.org', '@type': ['LocalBusiness', 'RecyclingCenter'], '@id': abs('/#organisation'),
+  name: s.firma, alternateName: [s.marke, s.submarke], url: abs('/'), logo: abs('/favicon.svg'), image: og,
+  telephone: s.telefonLink, email: s.email, founder: { '@type': 'Person', name: s.geschaeftsfuehrer },
+  address: { '@type': 'PostalAddress', streetAddress: s.strasse, postalCode: s.plz, addressLocality: s.ort, addressRegion: 'Niederösterreich', addressCountry: 'AT' },
+  areaServed: s.einzugsgebiet.map((o) => ({ '@type': 'City', name: o })),
+  priceRange: '€€', knowsAbout: ['Mineralwolle-Recycling', 'Glaswolle entsorgen', 'Steinwolle entsorgen', 'Künstliche Mineralfasern (KMF)', 'Wärmedämmung'],
+  makesOffer: [
+    { '@type': 'Offer', name: 'Entsorgung von Mineralwolle (Privatkunden)', priceSpecification: { '@type': 'UnitPriceSpecification', price: s.preisKg, priceCurrency: 'EUR', unitCode: 'KGM', valueAddedTaxIncluded: true } },
+  ],
+};
+const website = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': abs('/#website'), url: abs('/'), name: s.marke, inLanguage: 'de-AT', publisher: { '@id': abs('/#organisation') } };
+const bc = crumbs.length ? { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: 'Start', url: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: abs(c.url) })) } : null;
+const all = [org, website, bc, ...schema].filter(Boolean);
+const ann = s.announcement;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="de-AT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {/* KLICKDUMMY: in src/data/settings.json "klickdummy": false setzen – BEI GO-LIVE ENTFERNEN */}
+  {(s.klickdummy || noindex) && <meta name="robots" content="noindex, nofollow" />}
+  <meta property="og:type" content={ogType} />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:site_name" content={s.marke} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={og} />
+  <meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0f3d3a" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-Zusammenfassung" />
+  {all.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
+  <script is:inline>document.documentElement.classList.add('js');window.dataLayer=window.dataLayer||[];</script>
+  {/* GTM – erst nach Cookie-Zustimmung laden. Snippet hier einsetzen:
+  <script>(function(w,d,s,l,i){...})(window,document,'script','dataLayer','GTM-XXXXXXX');</script> */}
+</head>
+<body data-tracking-panel={s.trackingPanel ? '1' : '0'}>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  {ann.aktiv && (
+    <div class="ann" data-ann>
+      <div class="wrap ann__in">
+        <div class="ann__msgs">
+          {ann.botschaften.map((m, i) => (
+            <a class:list={['ann__msg', { 'is-on': i === 0 }]} href={m.link} data-track="announcement_click" data-label={m.text}><Icon name={i === 0 ? 'alert' : i === 1 ? 'scale' : 'phone'} /><span>{m.text}</span></a>
+          ))}
+        </div>
+        <span class="ann__r">{ann.rechts}</span>
+        <button class="ann__x" type="button" aria-label="Hinweis schließen" data-ann-x><Icon name="x" /></button>
+      </div>
+    </div>
+  )}
+
+  <header class="hdr" data-hdr>
+    <div class="wrap hdr__in">
+      <Logo />
+      <nav class="nav" aria-label="Hauptnavigation">
+        <ul>{s.navigation.map((n) => <li><a href={n.link} aria-current={path.startsWith(n.link) ? 'page' : undefined}>{n.label}</a></li>)}</ul>
+      </nav>
+      <div class="hdr__act">
+        <a class="hdr__tel" href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="header"><Icon name="phone" />{s.telefon}</a>
+        <a class="cartbtn" href="/warenkorb/" aria-label="Warenkorb"><Icon name="cart" /><b data-cart-count hidden>0</b></a>
+        <button class="btn btn--pri btn--sm hdr__cta" type="button" data-modal data-track="cta_click" data-label="header">Kostenlose Beratung</button>
+        <button class="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mnav" data-burger><Icon name="menu" /></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mnav" id="mnav" hidden role="dialog" aria-modal="true" aria-label="Menü">
+    <div class="mnav__top"><Logo /><button class="mnav__x" type="button" aria-label="Menü schließen" data-burger-x><Icon name="x" /></button></div>
+    <ul>
+      {s.navigation.map((n) => <li><a href={n.link}>{n.label}<Icon name="arrow" /></a></li>)}
+      <li><a href="/gewerbe/">Gewerbe<Icon name="arrow" /></a></li>
+      <li><a href="/kontakt/">Kontakt<Icon name="arrow" /></a></li>
+    </ul>
+    <div class="mnav__b">
+      <a class="btn btn--out on-dark btn--lg" href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="menu"><Icon name="phone" />{s.telefon}</a>
+      <button class="btn btn--pri btn--lg" type="button" data-modal data-track="cta_click" data-label="menu">Kostenlose Beratung</button>
+    </div>
+  </div>
+
+  <main id="main"><slot /></main>
+
+  <footer class="ftr">
+    <div class="wrap">
+      <div class="ftr__g">
+        <div>
+          <Logo />
+          <p>{s.firma}<br />{s.strasse}, {s.plz} {s.ort}</p>
+          <ul>
+            <li><a href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="footer"><Icon name="phone" />{s.telefon}</a></li>
+            <li><a href={`mailto:${s.email}`}><Icon name="mail" />{s.email}</a></li>
+            <li><span style="display:inline-flex;gap:8px;align-items:center;min-height:36px"><Icon name="clock" />{s.oeffnungszeiten}</span></li>
+          </ul>
+        </div>
+        <details open><summary>Angebot<Icon name="plus" /></summary><ul>
+          <li><a href="/entsorgung/">Mineralwolle entsorgen</a></li>
+          <li><a href="/recycling/">Recycling & Glasschmelze</a></li>
+          <li><a href="/shop/?kat=hochbau">Glaswolle für den Hochbau</a></li>
+          <li><a href="/shop/?kat=technik">Technische Isolierung</a></li>
+          <li><a href="/shop/schneidgeraet-miete/">Schneidgerät mieten</a></li>
+        </ul></details>
+        <details open><summary>Service<Icon name="plus" /></summary><ul>
+          <li><a href="/entsorgung/#rechner">Kostenrechner</a></li>
+          <li><a href="/entsorgung/#ablauf">So läuft's ab</a></li>
+          <li><a href="/faq/">Fragen & Antworten</a></li>
+          <li><a href="/ratgeber/">Ratgeber</a></li>
+          <li><button type="button" data-modal>Beratung anfragen</button></li>
+        </ul></details>
+        <details open><summary>Unternehmen<Icon name="plus" /></summary><ul>
+          <li><a href="/ueber-uns/">Über uns</a></li>
+          <li><a href="/gewerbe/">Für Gewerbe</a></li>
+          <li><a href="/kontakt/">Kontakt & Anfahrt</a></li>
+          <li><a href="/warenkorb/">Warenkorb</a></li>
+        </ul></details>
+      </div>
+      <div class="ftr__b">
+        <span>© {year} {s.firma} · Dämmstoffe von Thermowool</span>
+        <nav aria-label="Rechtliches"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="/agb/">AGB</a><button type="button" data-cookie-open style="background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:0">Cookie-Einstellungen</button></nav>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky" data-sticky>
+    <a href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="sticky"><Icon name="phone" />Anrufen</a>
+    <a href="/shop/" data-track="cta_click" data-label="sticky-shop"><Icon name="bag" />Shop</a>
+    <button class="is-acc" type="button" data-modal data-track="cta_click" data-label="sticky"><Icon name="chat" />Beratung</button>
+  </div>
+
+  <!-- Beratungs-Modal (Netlify Form "beratung") -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__d" role="dialog" aria-modal="true" aria-labelledby="modal-t">
+      <div class="modal__h">
+        <span class="ibox" style="background:var(--acc-100)"><Icon name="chat" /></span>
+        <div><b id="modal-t">Kostenlose Beratung</b><small>Unverbindlich · Antwort {s.antwortzeit}</small></div>
+        <button class="modal__x" type="button" aria-label="Schließen" data-modal-x><Icon name="x" /></button>
+      </div>
+      <div class="prog" data-prog><div class="prog__t"><span data-prog-n>Für wen?</span><span data-prog-c>Schritt 1 von 5</span></div><div class="prog__b"><i></i></div></div>
+      <form class="modal__c" name="beratung" method="POST" action="/danke/" data-netlify="true" netlify-honeypot="bot-field" data-mform novalidate>
+        <input type="hidden" name="form-name" value="beratung" />
+        <input type="hidden" name="quelle" value="" />
+        <input type="hidden" name="rechner" value="" />
+        <p class="hp"><label>Nicht ausfüllen: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+        <div class="step" data-step="Für wen?">
+          <h3>Für wen suchen Sie eine Lösung?</h3>
+          <p class="small">Damit wir die Beratung auf Ihre Situation abstimmen können.</p>
+          <div class="opts opts--3" data-auto>
+            <label class="opt"><input type="radio" name="kundentyp" value="Privat" required /><span><Icon name="home" /><span><b>Privat</b><small>Haus, Wohnung, Dachboden</small></span></span></label>
+            <label class="opt"><input type="radio" name="kundentyp" value="Gewerbe" /><span><Icon name="building" /><span><b>Gewerbe</b><small>Bau, Trockenbau, Abbruch</small></span></span></label>
+            <label class="opt"><input type="radio" name="kundentyp" value="Hausverwaltung / Gemeinde" /><span><Icon name="users" /><span><b>Verwaltung</b><small>Hausverwaltung, Gemeinde</small></span></span></label>
+          </div>
+        </div>
+        <div class="step" data-step="Anliegen" hidden>
+          <h3>Worum geht es?</h3>
+          <p class="small">Mehrfachauswahl möglich.</p>
+          <div class="opts opts--2">
+            {['Mineralwolle entsorgen', 'Dämmstoff kaufen', 'Schneidgerät mieten', 'Absaugung vor Ort', 'Sammelsäcke bestellen', 'Allgemeine Beratung'].map((l) => (
+              <label class="opt"><input type="checkbox" name="anliegen[]" value={l} /><span><b>{l}</b></span></label>
+            ))}
+          </div>
+        </div>
+        <div class="step" data-step="Variante & Zeitpunkt" hidden>
+          <h3>Wie und wann?</h3>
+          <p class="flabel" style="margin-top:14px">Variante</p>
+          <div class="opts opts--2">
+            {[['Anlieferung nach Stockerau', 'Sie bringen die Säcke'], ['Abholung bei mir', 'innerhalb einer Woche'], ['Absaugung vor Ort', 'für größere Mengen'], ['Weiß ich noch nicht', 'wir beraten Sie']].map(([v, t]) => (
+              <label class="opt"><input type="radio" name="variante" value={v} /><span><span><b>{v}</b><small>{t}</small></span></span></label>
+            ))}
+          </div>
+          <p class="flabel" style="margin-top:18px">Zeitpunkt</p>
+          <div class="seg">
+            {['Sofort', 'In 1–2 Wochen', 'Später'].map((v, i) => <label><input type="radio" name="zeitpunkt" value={v} checked={i === 1} /><span>{v}</span></label>)}
+          </div>
+        </div>
+        <div class="step" data-step="Material & Ort" hidden>
+          <h3>Ihre Situation</h3>
+          <p class="flabel" style="margin-top:14px">Material</p>
+          <div class="seg" style="margin-bottom:16px">
+            {['Glaswolle', 'Steinwolle', 'Beides / gemischt', 'Weiß nicht'].map((v) => <label><input type="radio" name="material" value={v} /><span>{v}</span></label>)}
+          </div>
+          <div class="frow">
+            <div class="field"><label for="m-menge">Menge (ca.)</label><input id="m-menge" name="menge" type="text" placeholder="z. B. 300 kg, 12 Säcke, 80 m²" /></div>
+            <div class="field"><label for="m-plz">PLZ / Ort</label><input id="m-plz" name="plz_ort" type="text" autocomplete="postal-code" placeholder="z. B. 2000 Stockerau" /></div>
+          </div>
+          <div class="field"><label for="m-msg">Anmerkung <small>(optional)</small></label><textarea id="m-msg" name="nachricht" placeholder="Was sollen wir wissen?"></textarea></div>
+        </div>
+        <div class="step" data-step="Kontakt" hidden>
+          <h3>Wie erreichen wir Sie?</h3>
+          <div class="frow" style="margin-top:14px">
+            <div class="field"><label for="m-name">Name *</label><input id="m-name" name="name" type="text" autocomplete="name" required /></div>
+            <div class="field"><label for="m-tel">Telefon *</label><input id="m-tel" name="telefon" type="tel" inputmode="tel" autocomplete="tel" required /></div>
+          </div>
+          <div class="field"><label for="m-mail">E-Mail <small>(optional)</small></label><input id="m-mail" name="email" type="email" inputmode="email" autocomplete="email" /></div>
+          <p class="flabel">Bevorzugter Kontaktweg</p>
+          <div class="seg" style="margin-bottom:16px">
+            {['Rückruf', 'E-Mail'].map((v, i) => <label><input type="radio" name="kontaktweg" value={v} checked={i === 0} /><span>{v}</span></label>)}
+          </div>
+          <label class="check"><input type="checkbox" name="datenschutz" value="ja" required /><span>Ich stimme zu, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></span></label>
+          <p class="err" role="alert" aria-live="assertive" data-err></p>
+        </div>
+        <div class="step done" data-done hidden>
+          <span class="avatar">{s.initialen}</span>
+          <h3>Danke – Ihre Anfrage ist bei uns.</h3>
+          <p style="margin-inline:auto">{s.geschaeftsfuehrer} meldet sich persönlich {s.antwortzeit}.</p>
+          <p class="small" style="margin-inline:auto">Dringend? <a href={`tel:${s.telefonLink}`}>{s.telefon}</a></p>
+          <button class="btn btn--sec" type="button" data-modal-x>Schließen</button>
+        </div>
+      </form>
+      <div class="modal__f" data-mfoot>
+        <span class="ssl"><Icon name="lock" />SSL-verschlüsselt · DSGVO</span>
+        <button class="btn btn--out btn--sm" type="button" data-prev hidden>Zurück</button>
+        <button class="btn btn--pri" type="button" data-next disabled>Weiter <Icon name="arrow" class="icon--arr" /></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cookie" data-cookie hidden role="dialog" aria-label="Cookie-Einstellungen">
+    <b style="font-family:var(--fh)">Cookies & Datenschutz</b>
+    <p>Wir verwenden notwendige Cookies. Statistik-Cookies setzen wir nur mit Ihrer Zustimmung. <a href="/datenschutz/">Mehr erfahren</a></p>
+    <div class="btns"><button class="btn btn--out btn--sm" type="button" data-cookie-set="necessary">Nur notwendige</button><button class="btn btn--sec btn--sm" type="button" data-cookie-set="all">Alle akzeptieren</button></div>
+  </div>
+
+  <div class="tlog" data-tlog hidden><ul class="tlog__l" hidden></ul><button class="tlog__p" type="button" aria-expanded="false">Tracking-Log <b>0</b></button></div>
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+
+  <script>import '../scripts/main.js';</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+const { crumbs = [], eyebrow, title, answer, facts = [] } = Astro.props;
+---
+<section class="phero">
+  <div class="wrap">
+    <nav aria-label="Brotkrumen"><ol class="crumbs"><li><a href="/">Start</a></li>{crumbs.map((c: any, i: number) => <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.url}>{c.name}</a>}</li>)}</ol></nav>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {answer && <div class="answer"><p>{answer}</p></div>}
+    {facts.length > 0 && <ul class="facts">{facts.map((f: string) => <li><Icon name="check" />{f}</li>)}</ul>}
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Head from '../components/Head.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import faq from '../data/faq.json';
+const crumbs = [{ name: 'Gewerbe', url: '/gewerbe/' }];
+const items = faq.gruppen.find((g) => g.titel === 'Gewerbe')!.fragen;
+---
+<Base title="Mineralwolle entsorgen für Gewerbe & Baustellen | MIN-REC" description="Verwertungsweg für Glas- und Steinwolle ab 2027: sortenreine Übernahme für Trockenbau, Dach, Abbruch, Hausverwaltungen und Gemeinden. Angebot nach Menge." crumbs={crumbs}>
+  <PageHero crumbs={crumbs} eyebrow="Für Gewerbe, Verwaltungen & Gemeinden" title="Ihr Verwertungsweg für Mineralwolle ab 2027"
+    answer="Ab 1. Jänner 2027 darf Mineralwolle nicht mehr deponiert werden. MIN-REC übernimmt Glas- und Steinwolle von Betrieben sortenrein – aus Neubau, Sanierung und Rückbau, unabhängig vom Hersteller. Die Preise richten sich nach Tätigkeitsfeld und Menge."
+    facts={['Herstellerunabhängig', 'Alt oder neu', 'Angebot nach Menge']}>
+    <div class="btns" style="margin-top:22px"><button class="btn btn--pri btn--lg" type="button" data-modal data-kundentyp="Gewerbe" data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label="gewerbe-hero">Gewerbe-Angebot anfragen <Icon name="arrow" class="icon--arr" /></button></div>
+  </PageHero>
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Für wen" title="Wer mit uns arbeitet" />
+      <div class="grid g3">
+        <div class="card"><span class="ibox"><Icon name="layers" /></span><h3 style="margin-top:12px">Trockenbau & Ausbau</h3><p class="small">Verschnitt und Rückbau von Trennwand- und Deckendämmung.</p></div>
+        <div class="card"><span class="ibox"><Icon name="home" /></span><h3 style="margin-top:12px">Dachdecker & Zimmerer</h3><p class="small">Alte Zwischensparren- und Dachbodendämmung aus der Sanierung.</p></div>
+        <div class="card"><span class="ibox"><Icon name="building" /></span><h3 style="margin-top:12px">Abbruch & Bau</h3><p class="small">Größere Mengen aus Rückbau – auf Wunsch mit Absaugung vor Ort.</p></div>
+        <div class="card"><span class="ibox"><Icon name="users" /></span><h3 style="margin-top:12px">Hausverwaltungen</h3><p class="small">Dachbodenräumungen und Sanierungen im Bestand.</p></div>
+        <div class="card"><span class="ibox"><Icon name="recycle" /></span><h3 style="margin-top:12px">Gemeinden & Sammelzentren</h3><p class="small">Abnehmer für getrennt gesammelte Mineralwolle.</p></div>
+        <div class="card"><span class="ibox"><Icon name="flame" /></span><h3 style="margin-top:12px">Haustechnik & Industrie</h3><p class="small">Rohrschalen und technische Isolierung aus Umbau und Wartung.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--alt">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Ihr Vorteil</p>
+        <h2>Planbar statt pauschal</h2>
+        <div class="args">
+          <div class="arg"><span class="ibox"><Icon name="scale" /></span><div><h3>Verwogen abgerechnet</h3><p>Sie zahlen das Gewicht – nachvollziehbar für Ihre Kalkulation und Ihren Auftraggeber.</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="truck" /></span><div><h3>Abholung oder Anlieferung</h3><p>Sammelstelle in Stockerau, Abholung nach Vereinbarung.</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="bag" /></span><div><h3>Dämmstoff gleich mitliefern</h3><p>Glaswolle und technische Isolierung von Thermowool aus demselben Shop.</p></div></div>
+        </div>
+      </div>
+      <div class="card card--sh">
+        <h3>In 3 Schritten zum Angebot</h3>
+        <ol><li>Tätigkeitsfeld und erwartete Menge nennen</li><li>Wir melden uns mit Preis und Logistikvorschlag</li><li>Säcke erhalten, sammeln, abholen lassen</li></ol>
+        <button class="btn btn--sec btn--block" type="button" data-modal data-kundentyp="Gewerbe" data-track="cta_click" data-label="gewerbe-box">Jetzt anfragen</button>
+        <a class="tlink" href="/shop/?kat=technik" style="margin-top:6px">Technische Isolierung ansehen <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+  <section class="sec"><div class="wrap"><Head eyebrow="FAQ" title="Fragen von Betrieben" /><Faq items={items} /></div></section>
+  <Cta title="Machen Sie Ihre Baustellen 2027-fit" text="Klären wir jetzt Mengen und Abläufe – bevor die Deponie zu ist." label="gewerbe-abschluss" />
+</Base>

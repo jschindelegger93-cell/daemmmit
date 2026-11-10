@@ -1,0 +1,13 @@
+---
+import s from '../data/settings.json';
+const { href = '/' } = Astro.props;
+---
+<a class="logo" href={href} aria-label={`${s.marke} – zur Startseite`}>
+  <svg viewBox="0 0 48 48" aria-hidden="true">
+    <rect width="48" height="48" rx="12" fill="#0f3d3a"/>
+    <path d="M36.5 24a12.5 12.5 0 1 1-4.2-9.35" stroke="#ffc629" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M33.6 8.9v6.2h-6.2" stroke="#ffc629" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16.500 20.500c2.500-1.900 5 1.900 7.500 0s5-1.900 7.500 0M16.500 25c2.500-1.900 5 1.900 7.500 0s5-1.900 7.500 0M16.500 29.500c2.500-1.900 5 1.900 7.500 0s5-1.900 7.500 0" stroke="#fff" stroke-width="2.100" fill="none" stroke-linecap="round"/>
+  </svg>
+  <span class="logo__t"><span class="logo__n">Dämm<i>-Mit</i></span><span class="logo__c">Dämmen · Sammeln · Recyceln</span></span>
+</a>

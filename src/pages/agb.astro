@@ -1,0 +1,13 @@
+---
+import Legal from '../components/Legal.astro';
+import s from '../data/settings.json';
+---
+<Legal title="AGB" slug="agb">
+  <p><span class="ph">[PLATZHALTER – Zusammenfassung auf Basis der bestehenden AGB von min-rec.at. Bitte den vollständigen, rechtlich geprüften AGB-Text hier einsetzen.]</span></p>
+  <h2>Anbieter</h2><p>{s.firma}, {s.strasse}, {s.plz} {s.ort}. Gerichtsstand: {s.gericht}.</p>
+  <h2>Bestellung und Vertragsschluss</h2><p>Der Warenkorb im Shop ist eine unverbindliche Bestellanfrage. Ein Vertrag kommt erst zustande, wenn Sie unser Angebot bestätigen.</p>
+  <h2>Preise</h2><p>Preise verstehen sich inklusive der gesetzlichen Mehrwertsteuer, zuzüglich Versand- bzw. Lieferkosten. Die Entsorgung von Mineralwolle wird nach verwogenem Gewicht verrechnet.</p>
+  <h2>Zahlung</h2><p>Zahlung nach Rechnung. Bei Zahlungsverzug fallen Mahnspesen und Verzugszinsen an.</p>
+  <h2>Rücktrittsrecht</h2><p>Verbrauchern steht das gesetzliche Rücktrittsrecht von 14 Tagen zu. Ausgenommen sind Sonderanfertigungen und Waren, die sich nicht für eine Rücksendung eignen. Werden zurückgegebene Waren abgeholt, werden die Transportkosten nach Aufwand verrechnet.</p>
+  <h2>Übernahme von Mineralwolle</h2><p>Mineralwolle wird ausschließlich in MIN-REC Sammelsäcken und sortenrein übernommen. Für gemischtes Material wird ein Aufschlag von 50 % verrechnet. <span class="ph">[PLATZHALTER: Annahmebedingungen im Detail]</span></p>
+</Legal>

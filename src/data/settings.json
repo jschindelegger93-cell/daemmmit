@@ -1,0 +1,43 @@
+{
+  "klickdummy": true,
+  "trackingPanel": true,
+  "firma": "Dämm-Mit EA GmbH",
+  "marke": "Dämm-Mit",
+  "submarke": "MIN-REC Mineralwolle-Recycling",
+  "claim": "Dämmen. Sammeln. Recyceln.",
+  "geschaeftsfuehrer": "Dipl.-Ing. Alfred Eilmer",
+  "initialen": "AE",
+  "strasse": "Windparkstraße 8",
+  "plz": "2000",
+  "ort": "Stockerau",
+  "land": "Österreich",
+  "telefon": "0664 / 610 68 80",
+  "telefonLink": "+436646106880",
+  "email": "eilmer@daemmmit.at",
+  "firmenbuch": "FN 464226 k",
+  "gericht": "Landesgericht Korneuburg",
+  "uid": "[PLATZHALTER UID-Nummer]",
+  "oeffnungszeiten": "Anlieferung und Abholung nach Vereinbarung",
+  "antwortzeit": "innerhalb eines Werktags",
+  "preisKg": 1.5,
+  "preisKm": 1.2,
+  "aufschlagMisch": 50,
+  "mieteSchneidgeraet": 50,
+  "announcement": {
+    "aktiv": true,
+    "rechts": "Sammelstelle Stockerau · Termin nach Vereinbarung",
+    "botschaften": [
+      { "text": "Ab 1.1.2027: Deponieverbot für Glas- und Steinwolle in Österreich", "link": "/ratgeber/deponieverbot-mineralwolle-2027/" },
+      { "text": "Entsorgung nach Gewicht: 1,50 €/kg statt Pauschalpreis", "link": "/entsorgung/" },
+      { "text": "Fragen? 0664 / 610 68 80", "link": "tel:+436646106880" }
+    ]
+  },
+  "navigation": [
+    { "label": "Entsorgung", "link": "/entsorgung/" },
+    { "label": "Recycling", "link": "/recycling/" },
+    { "label": "Shop", "link": "/shop/" },
+    { "label": "Ratgeber", "link": "/ratgeber/" },
+    { "label": "FAQ", "link": "/faq/" }
+  ],
+  "einzugsgebiet": ["Stockerau", "Korneuburg", "Hollabrunn", "Tulln", "Klosterneuburg", "Wien", "Mistelbach", "Krems", "St. Pölten"]
+}

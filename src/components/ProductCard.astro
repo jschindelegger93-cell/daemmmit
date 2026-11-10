@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+const { p } = Astro.props;
+const d = p.data;
+const url = `/shop/${p.id}/`;
+const eur = (n: number) => n.toLocaleString('de-AT', { style: 'currency', currency: 'EUR' });
+const katIcon: Record<string, string> = { entsorgung: 'recycle', hochbau: 'layers', technik: 'flame' };
+---
+<article class="card pcard" data-kat={d.kategorie} data-typ={d.typ} data-preis={d.preis ?? 99999} data-sort={d.sort}>
+  <a class="pcard__img" href={url} tabindex="-1" aria-hidden="true">
+    {d.bild ? <Image src={d.bild} alt="" widths={[300, 600]} sizes="(min-width:900px) 300px, 80vw" width={600} /> : <span class="pimg-ph"><Icon name={d.typ === 'service' ? 'truck' : 'bag'} /></span>}
+    {d.status ? <span class="badge badge--dark">{d.status}</span> : d.marke && <span class="badge">{d.marke}</span>}
+  </a>
+  <div class="pcard__b">
+    <h3><a href={url}>{d.title}</a></h3>
+    <p>{d.kurz}</p>
+    <ul>{(d.vorteile ?? []).slice(0, 3).map((v: string) => <li>{v}</li>)}</ul>
+    <div class="pcard__p">
+      {d.preis != null ? <>{eur(d.preis)} <small>{d.preisEinheit}</small></> : <>Preis auf Anfrage<small>verbindlich im persönlichen Angebot</small></>}
+    </div>
+    <div class="pcard__a">
+      <a class="btn btn--out btn--sm" href={url} data-track="cta_click" data-label={`details:${d.title}`}>Details</a>
+      {d.typ === 'service'
+        ? <button class="btn btn--pri btn--sm" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label={`anfragen:${d.title}`}>Anfragen</button>
+        : <button class="btn btn--pri btn--sm" type="button" data-add data-id={p.id} data-title={d.title} data-price={d.preis ?? ''} data-unit={d.einheit} data-variant={d.varianten?.[0]?.name ?? ''}><Icon name="cart" />In den Warenkorb</button>}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Head from '../components/Head.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import zerk from '../assets/img/site/hansek.png';
+const crumbs = [{ name: 'Recycling', url: '/recycling/' }];
+---
+<Base title="Mineralwolle-Recycling & induktive Glasschmelze | Dämm-Mit" description="Was aus gesammelter Glas- und Steinwolle wird: sortenrein sammeln, zerkleinern, induktiv einschmelzen. Der Kreislauf bei MIN-REC in Stockerau." crumbs={crumbs}>
+  <PageHero crumbs={crumbs} eyebrow="Mineralwolle-Recycling · Induktive Glasschmelzanlagen" title="Aus alter Wolle wird wieder Rohstoff"
+    answer="Mineralwolle besteht aus geschmolzenem Glas oder Gestein – und lässt sich deshalb wieder einschmelzen. MIN-REC sammelt Glas- und Steinwolle sortenrein, zerkleinert sie und arbeitet am Einschmelzen in induktiven Glasschmelzanlagen. So bleibt das Material im Kreislauf, statt auf der Deponie zu landen."
+    facts={['Sortenreine Sammlung', 'Zerkleinerung', 'Induktive Glasschmelze']} />
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Der Kreislauf" title="Vom Sack zurück zum Rohstoff" center />
+      <ol class="steps">
+        <li><h3>Sammeln</h3><p>Privat- und Gewerbekunden geben Glas- und Steinwolle getrennt in Sammelsäcken ab.</p><span class="hl">alt oder neu</span></li>
+        <li><h3>Wiegen & sortieren</h3><p>Jede Lieferung wird verwogen und nach Glas- und Steinwolle getrennt gelagert.</p><span class="hl">sortenrein</span></li>
+        <li><h3>Zerkleinern</h3><p>Die voluminöse Wolle wird mechanisch zerkleinert und verdichtet.</p><span class="hl">weniger Volumen</span></li>
+        <li><h3>Einschmelzen</h3><p>In der induktiven Glasschmelzanlage wird das Material wieder zur Schmelze.</p><span class="hl">neuer Rohstoff</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Das Verfahren</p>
+        <h2>Was ist eine induktive Glasschmelzanlage?</h2>
+        <p>Beim induktiven Schmelzen entsteht die Wärme durch ein elektromagnetisches Wechselfeld – elektrisch, ohne Brennerflamme. Das Schmelzgut wird im Tiegel auf Schmelztemperatur gebracht und kann anschließend weiterverarbeitet werden.</p>
+        <div class="args">
+          <div class="arg"><span class="ibox"><Icon name="flame" /></span><div><h3>Elektrisch statt mit Brenner</h3><p>Die Energie kommt aus Strom und wird direkt im Schmelzbereich wirksam.</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="layers" /></span><div><h3>Sortenreinheit entscheidet</h3><p>Glas- und Steinwolle schmelzen unterschiedlich. Deshalb trennen wir schon bei der Annahme.</p></div></div>
+          <div class="arg"><span class="ibox"><Icon name="recycle" /></span><div><h3>Stofflich verwerten</h3><p>Ziel ist ein Rohstoff, der wieder eingesetzt werden kann – genau das verlangt das Deponieverbot ab 2027.</p></div></div>
+        </div>
+        <div class="box box--acc" style="margin-top:24px"><p style="margin:0"><b>[PLATZHALTER – bitte von DI Eilmer ergänzen]</b> Anlagendaten (Standort, Kapazität, Schmelztemperatur, Status/Inbetriebnahme), was aus der Schmelze entsteht (Granulat, Rohstoff für …), Partner und Genehmigungen.</p></div>
+      </div>
+      <figure class="figure" style="margin:0"><Image src={zerk} alt="Zerkleinerungsanlage für Mineralwolle" widths={[400, 800]} sizes="(min-width:960px) 560px, 92vw" /><figcaption>Zerkleinerung: der Schritt vor dem Einschmelzen</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Für Hersteller, Entsorger & Gemeinden" title="Sie suchen einen Verwertungsweg?" text="Ab 2027 brauchen Sammelzentren, Entsorger und Bauunternehmen Abnehmer für Mineralwolle. Sprechen wir über Mengen, Logistik und Technik." />
+      <div class="btns"><a class="btn btn--sec" href="/gewerbe/">Für Gewerbe & Partner</a><button class="tlink" type="button" data-modal data-kundentyp="Gewerbe" data-track="cta_click" data-label="recycling-partner">Gespräch anfragen <Icon name="arrow" /></button></div>
+    </div>
+  </section>
+  <Cta title="Ihre Mineralwolle gehört in den Kreislauf" label="recycling-abschluss" />
+</Base>

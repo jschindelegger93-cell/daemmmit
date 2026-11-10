@@ -1,0 +1,167 @@
+# Sveltia CMS – Bearbeitung unter /admin (Anmeldung mit GitHub-Konto bzw. Token)
+backend:
+  name: github
+  repo: jschindelegger93-cell/daemmmit
+  branch: main
+locale: de
+media_folder: src/assets/img/uploads
+public_folder: ../../assets/img/uploads
+
+seo_fields: &seo
+  - { label: "SEO-Titel", name: seoTitle, widget: string, required: false, hint: "Max. 60 Zeichen: Keyword | Nutzen | Marke", pattern: ['^.{0,70}$', 'Maximal 70 Zeichen'] }
+  - { label: "Meta-Description", name: seoDescription, widget: text, required: false, hint: "Max. 155 Zeichen: Nutzen + Handlungsaufforderung", pattern: ['^[\s\S]{0,170}$', 'Maximal 170 Zeichen'] }
+  - { label: "Nicht indexieren (noindex)", name: noindex, widget: boolean, required: false, default: false }
+
+collections:
+  - name: einstellungen
+    label: "Einstellungen"
+    files:
+      - name: settings
+        label: "Firmendaten, Preise, Announcement, Navigation"
+        file: src/data/settings.json
+        fields:
+          - { label: "Klickdummy-Modus (noindex)", name: klickdummy, widget: boolean, hint: "BEI GO-LIVE AUSSCHALTEN – sonst findet Google die Seite nicht." }
+          - { label: "Tracking-Log anzeigen (Demo)", name: trackingPanel, widget: boolean }
+          - { label: "Firma", name: firma, widget: string }
+          - { label: "Marke", name: marke, widget: string }
+          - { label: "Submarke", name: submarke, widget: string }
+          - { label: "Claim", name: claim, widget: string }
+          - { label: "Geschäftsführer", name: geschaeftsfuehrer, widget: string }
+          - { label: "Initialen", name: initialen, widget: string }
+          - { label: "Straße", name: strasse, widget: string }
+          - { label: "PLZ", name: plz, widget: string }
+          - { label: "Ort", name: ort, widget: string }
+          - { label: "Land", name: land, widget: string }
+          - { label: "Telefon (Anzeige)", name: telefon, widget: string }
+          - { label: "Telefon (Link, +43…)", name: telefonLink, widget: string }
+          - { label: "E-Mail", name: email, widget: string }
+          - { label: "Firmenbuch", name: firmenbuch, widget: string }
+          - { label: "Gericht", name: gericht, widget: string }
+          - { label: "UID", name: uid, widget: string }
+          - { label: "Öffnungszeiten", name: oeffnungszeiten, widget: string }
+          - { label: "Antwortzeit", name: antwortzeit, widget: string, hint: "z. B. innerhalb eines Werktags" }
+          - { label: "Entsorgung €/kg (Privat)", name: preisKg, widget: number, value_type: float }
+          - { label: "Abholung €/km", name: preisKm, widget: number, value_type: float }
+          - { label: "Aufschlag Mischmaterial %", name: aufschlagMisch, widget: number, value_type: int }
+          - { label: "Miete Schneidgerät €/Tag", name: mieteSchneidgeraet, widget: number, value_type: int }
+          - label: "Announcement Bar"
+            name: announcement
+            widget: object
+            fields:
+              - { label: "Aktiv", name: aktiv, widget: boolean }
+              - { label: "Text rechts (Desktop)", name: rechts, widget: string }
+              - label: "Botschaften"
+                name: botschaften
+                widget: list
+                fields:
+                  - { label: "Text", name: text, widget: string }
+                  - { label: "Link", name: link, widget: string }
+          - label: "Navigation"
+            name: navigation
+            widget: list
+            fields:
+              - { label: "Bezeichnung", name: label, widget: string }
+              - { label: "Link", name: link, widget: string }
+          - { label: "Einzugsgebiet (Orte)", name: einzugsgebiet, widget: list }
+      - name: home
+        label: "Startseite: Hero & Inhaber"
+        file: src/data/home.json
+        fields:
+          - label: "Hero"
+            name: hero
+            widget: object
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Headline", name: h1, widget: string, hint: "Marker-Wörter in {geschweifte Klammern} setzen" }
+              - { label: "Text", name: text, widget: text }
+              - { label: "Trust-Bullets", name: bullets, widget: list }
+              - { label: "Karte: Titel", name: karteTitel, widget: string }
+              - { label: "Karte: Text", name: karteText, widget: string }
+              - { label: "Bildunterschrift", name: bildunterschrift, widget: string }
+          - label: "Inhaber"
+            name: inhaber
+            widget: object
+            fields:
+              - { label: "Zitat", name: zitat, widget: text }
+              - { label: "Text", name: text, widget: text }
+      - name: faq
+        label: "FAQ"
+        file: src/data/faq.json
+        fields:
+          - label: "Themen"
+            name: gruppen
+            widget: list
+            fields:
+              - { label: "Thema", name: titel, widget: string }
+              - label: "Fragen"
+                name: fragen
+                widget: list
+                fields:
+                  - { label: "Frage", name: frage, widget: string }
+                  - { label: "Antwort", name: antwort, widget: text }
+                  - { label: "Auf Startseite zeigen", name: start, widget: boolean, required: false }
+
+  - name: produkte
+    label: "Produkte & Leistungen"
+    label_singular: "Produkt"
+    folder: src/content/produkte
+    create: true
+    slug: "{{title}}"
+    media_folder: /src/assets/img/produkte
+    public_folder: ../../assets/img/produkte
+    fields:
+      - { label: "Name", name: title, widget: string }
+      - { label: "Typ", name: typ, widget: select, options: [{ label: "Produkt (Warenkorb)", value: produkt }, { label: "Leistung (Anfrage)", value: service }] }
+      - { label: "Kategorie", name: kategorie, widget: select, options: [{ label: "Entsorgung & Zubehör", value: entsorgung }, { label: "Glaswolle Hochbau", value: hochbau }, { label: "Technische Isolierung", value: technik }] }
+      - { label: "Marke", name: marke, widget: string, required: false }
+      - { label: "Kurzbeschreibung", name: kurz, widget: text, hint: "1–2 Sätze, erscheint auf Karte und als Einleitung" }
+      - { label: "Bild", name: bild, widget: image, required: false }
+      - { label: "Geeignet für", name: anwendung, widget: list, required: false }
+      - { label: "Vorteile", name: vorteile, widget: list, required: false, hint: "Max. 4 kurze Punkte" }
+      - label: "Technische Daten"
+        name: daten
+        widget: list
+        required: false
+        fields: [{ label: "Bezeichnung", name: label, widget: string }, { label: "Wert", name: wert, widget: string }]
+      - label: "Ausführungen / Dicken"
+        name: varianten
+        widget: list
+        required: false
+        fields: [{ label: "Name", name: name, widget: string }, { label: "Info", name: info, widget: string, required: false }]
+      - { label: "Einheit", name: einheit, widget: string, hint: "Rolle, Paket, Sack, Tag, kg …" }
+      - { label: "Preis in €", name: preis, widget: number, value_type: float, required: false, hint: "Leer lassen = Preis auf Anfrage" }
+      - { label: "Preis-Einheit", name: preisEinheit, widget: string, required: false, hint: "z. B. pro Tag, pro Rolle inkl. MwSt." }
+      - { label: "Preis-Hinweis", name: preisHinweis, widget: string, required: false }
+      - { label: "Status-Badge", name: status, widget: string, required: false, hint: "z. B. In Vorbereitung" }
+      - { label: "Top-Produkt (Startseite)", name: top, widget: boolean, required: false }
+      - { label: "Sortierung", name: sort, widget: number, value_type: int, hint: "Kleine Zahl = weiter vorne" }
+      - { label: "Quelle / Datenblatt-Link", name: quelle, widget: string, required: false }
+      - { label: "Beschreibung", name: body, widget: markdown }
+      - *seo
+
+  - name: ratgeber
+    label: "Ratgeber"
+    label_singular: "Artikel"
+    folder: src/content/ratgeber
+    create: true
+    slug: "{{title}}"
+    fields:
+      - { label: "Titel", name: title, widget: string }
+      - { label: "Teaser", name: kurz, widget: text }
+      - { label: "Direkte Antwort (2–3 Sätze)", name: antwort, widget: text, hint: "Wichtig für Google und KI-Suche: Wer, was, wo, Preis ab." }
+      - { label: "Kategorie", name: kategorie, widget: string }
+      - { label: "Datum", name: datum, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Zuletzt aktualisiert", name: aktualisiert, widget: datetime, time_format: false, format: "YYYY-MM-DD", required: false }
+      - { label: "Lesezeit (Min.)", name: lesezeit, widget: number, value_type: int }
+      - label: "Quellen"
+        name: quellen
+        widget: list
+        required: false
+        fields: [{ label: "Titel", name: titel, widget: string }, { label: "URL", name: url, widget: string }]
+      - label: "FAQ-Block"
+        name: faq
+        widget: list
+        required: false
+        fields: [{ label: "Frage", name: frage, widget: string }, { label: "Antwort", name: antwort, widget: text }]
+      - { label: "Inhalt", name: body, widget: markdown }
+      - *seo

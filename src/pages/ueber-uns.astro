@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import s from '../data/settings.json';
+import home from '../data/home.json';
+const crumbs = [{ name: 'Über uns', url: '/ueber-uns/' }];
+const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', mainEntity: { '@id': new URL('/#organisation', Astro.site).href } }];
+---
+<Base title="Über Dämm-Mit EA GmbH | Mineralwolle-Recycling Stockerau" description="Die Dämm-Mit EA GmbH aus Stockerau sammelt und recycelt Mineralwolle unter der Marke MIN-REC und liefert Dämmstoffe. Geschäftsführer: DI Alfred Eilmer." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="Über uns" title="Dämmen, sammeln, recyceln – aus Stockerau"
+    answer={`Die ${s.firma} mit Sitz in ${s.ort} sammelt unter der Marke MIN-REC Glaswolle und Steinwolle von Privat- und Gewerbekunden und führt sie der Verwertung zu. Im Shop gibt es dazu neue Dämmstoffe. Geschäftsführer ist ${s.geschaeftsfuehrer}.`} />
+  <section class="sec">
+    <div class="wrap owner">
+      <div class="owner__ph">{s.initialen}<small>[PLATZHALTER Foto: {s.geschaeftsfuehrer}]</small></div>
+      <div>
+        <h2>Wer hinter Dämm-Mit steht</h2>
+        <p>{home.inhaber.text}</p>
+        <p>Unser Ansatz ist einfach: Was als Dämmstoff verbaut wurde, soll am Ende nicht auf der Deponie liegen. Deshalb verbinden wir drei Dinge – den Verkauf neuer Dämmstoffe, die sortenreine Sammlung alter Mineralwolle und die Arbeit am Recycling durch induktive Glasschmelze.</p>
+        <p><span class="ph">[PLATZHALTER: Gründungsjahr, Werdegang von DI Eilmer, Teamgröße, Mitgliedschaften/Genehmigungen als Abfallsammler]</span></p>
+        <ul class="checks"><li><Icon name="check" />Jahrzehntelange Erfahrung mit Dämmstoffen</li><li><Icon name="check" />Abrechnung nach verwogenem Gewicht</li><li><Icon name="check" />Privat und Gewerbe, alt oder neu</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--alt">
+    <div class="wrap grid g3">
+      <div class="card"><span class="ibox"><Icon name="layers" /></span><h3 style="margin-top:12px">Dämmen</h3><p class="small">Glaswolle und Steinwolle von Thermowool für Hochbau und Haustechnik.</p><a class="tlink" href="/shop/">Zum Shop <Icon name="arrow" /></a></div>
+      <div class="card"><span class="ibox"><Icon name="bag" /></span><h3 style="margin-top:12px">Sammeln</h3><p class="small">MIN-REC übernimmt Mineralwolle in Sammelsäcken – angeliefert oder abgeholt.</p><a class="tlink" href="/entsorgung/">Zur Entsorgung <Icon name="arrow" /></a></div>
+      <div class="card"><span class="ibox"><Icon name="recycle" /></span><h3 style="margin-top:12px">Recyceln</h3><p class="small">Zerkleinern und induktiv einschmelzen statt deponieren.</p><a class="tlink" href="/recycling/">Zum Recycling <Icon name="arrow" /></a></div>
+    </div>
+  </section>
+  <Cta label="ueber-abschluss" />
+</Base>

@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+import s from '../data/settings.json';
+const { title = 'Bereit, die alte Dämmung loszuwerden?', text = 'Schildern Sie uns kurz Ihre Situation. Sie bekommen eine ehrliche Einschätzung und ein Angebot nach Gewicht – ohne Vorauszahlung.', label = 'abschluss' } = Astro.props;
+---
+<section class="sec">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div><h2>{title}</h2></div>
+      <p>{text}</p>
+      <div class="btns">
+        <button class="btn btn--pri btn--lg" type="button" data-modal data-track="cta_click" data-label={label}>Kostenlose Beratung anfragen <Icon name="arrow" class="icon--arr" /></button>
+        <a class="cta__tel" href={`tel:${s.telefonLink}`} data-track="phone_click" data-label={label}><Icon name="phone" />{s.telefon}</a>
+      </div>
+    </div>
+  </div>
+</section>

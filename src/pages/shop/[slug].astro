@@ -1,0 +1,118 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Head from '../../components/Head.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Faq from '../../components/Faq.astro';
+import s from '../../data/settings.json';
+export async function getStaticPaths() {
+  const all = await getCollection('produkte');
+  return all.map((p) => ({ params: { slug: p.id }, props: { p, all } }));
+}
+const { p, all } = Astro.props;
+const d = p.data;
+const { Content } = await render(p);
+const katName: Record<string, string> = { entsorgung: 'Entsorgung & Zubehör', hochbau: 'Glaswolle Hochbau', technik: 'Technische Isolierung' };
+const crumbs = [{ name: 'Shop', url: '/shop/' }, { name: katName[d.kategorie], url: `/shop/?kat=${d.kategorie}` }, { name: d.title, url: `/shop/${p.id}/` }];
+const eur = (n: number) => n.toLocaleString('de-AT', { style: 'currency', currency: 'EUR' });
+const isService = d.typ === 'service';
+const sack = all.find((x) => x.id === 'sammelsack-mineralwolle');
+let related = all.filter((x) => x.id !== p.id && x.data.kategorie === d.kategorie).sort((a, b) => a.data.sort - b.data.sort).slice(0, 3);
+if (d.kategorie !== 'entsorgung' && sack) related = [...related.slice(0, 2), sack];
+const pfaq = isService
+  ? [{ frage: 'Wie wird abgerechnet?', antwort: 'Nach dem tatsächlich verwogenen Gewicht: 1,50 €/kg inkl. MwSt. für Privatkunden. Gemischtes Material kostet 50 % Aufschlag.' }, { frage: 'Brauche ich bestimmte Säcke?', antwort: 'Ja. Wir übernehmen Mineralwolle nur in MIN-REC Sammelsäcken. Sie bestellen sie im Shop.' }, { frage: 'Gilt der Preis auch für Gewerbe?', antwort: 'Für Gewerbekunden erstellen wir ein Angebot nach Tätigkeitsfeld und Menge.' }]
+  : d.kategorie === 'entsorgung'
+  ? [{ frage: 'Wie bestelle ich?', antwort: 'In den Warenkorb legen und Bestellanfrage absenden. Sie erhalten ein Angebot und zahlen nach Rechnung.' }, { frage: 'Ist die Entsorgung im Preis enthalten?', antwort: 'Nein. Die Entsorgung wird getrennt nach verwogenem Gewicht verrechnet (1,50 €/kg für Privatkunden).' }]
+  : [{ frage: `Was kostet ${d.title}?`, antwort: 'Der Preis hängt von Dicke, Menge und Lieferart ab. Sie erhalten ein persönliches Angebot mit verbindlichem Preis.' }, { frage: 'Wie viel brauche ich?', antwort: 'Fläche in m² plus rund 5 % Verschnitt, geteilt durch die m² pro Packung. Gern rechnen wir die Menge für Sie aus.' }, { frage: 'Können Sie die alte Dämmung mitnehmen?', antwort: 'Ja. Alte Glas- oder Steinwolle sammeln wir in MIN-REC Sammelsäcken und verrechnen 1,50 €/kg verwogen (Privatkunden).' }, { frage: 'Ist das Material brennbar?', antwort: 'Nein. Die Brandklasse steht in den technischen Daten – Mineralwolle ist nicht brennbar (Euroklasse A1 bzw. A2).' }];
+const abs = (u: string) => new URL(u, Astro.site).href;
+const offer = d.preis != null
+  ? { '@type': 'Offer', price: d.preis, priceCurrency: 'EUR', availability: d.status ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock', url: abs(`/shop/${p.id}/`), seller: { '@id': abs('/#organisation') }, ...(d.preisEinheit ? { description: d.preisEinheit } : {}) }
+  : null;
+const schema: any[] = [
+  isService
+    ? { '@context': 'https://schema.org', '@type': 'Service', name: d.title, description: d.kurz, provider: { '@id': abs('/#organisation') }, areaServed: s.einzugsgebiet, ...(offer ? { offers: offer } : {}) }
+    : { '@context': 'https://schema.org', '@type': 'Product', name: d.title, description: d.kurz, category: katName[d.kategorie], ...(d.marke ? { brand: { '@type': 'Brand', name: d.marke } } : {}), sku: p.id,
+        additionalProperty: (d.daten ?? []).map((x) => ({ '@type': 'PropertyValue', name: x.label, value: x.wert })), ...(offer ? { offers: offer } : {}) },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: pfaq.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })) },
+];
+---
+<Base title={d.seoTitle ?? `${d.title} | Dämm-Mit`} description={d.seoDescription ?? d.kurz} crumbs={crumbs} schema={schema} noindex={d.noindex ?? false} ogType="product">
+  <section class="phero" style="padding-bottom:0">
+    <div class="wrap"><nav aria-label="Brotkrumen"><ol class="crumbs"><li><a href="/">Start</a></li>{crumbs.map((c, i) => <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.url}>{c.name}</a>}</li>)}</ol></nav></div>
+  </section>
+  <section class="sec" style="padding-top:24px">
+    <div class="wrap pd">
+      <div class="pd__img">
+        {d.bild ? <Image src={d.bild} alt={d.title} widths={[400, 800, 1200]} sizes="(min-width:960px) 580px, 92vw" loading="eager" fetchpriority="high" /> : <span class="pimg-ph"><Icon name={isService ? 'truck' : 'bag'} /></span>}
+      </div>
+      <div>
+        <div class="btns" style="margin-bottom:12px">{d.marke && <span class="badge">{d.marke}</span>}{d.status && <span class="badge badge--dark">{d.status}</span>}<span class="badge badge--ok">{katName[d.kategorie]}</span></div>
+        <h1 style="font-size:clamp(1.8rem,3vw + .6rem,2.8rem)">{d.title}</h1>
+        <p class="lead">{d.kurz}</p>
+        <ul class="checks">{(d.vorteile ?? []).map((v) => <li><Icon name="check" />{v}</li>)}</ul>
+
+        <div class="buy" data-buy>
+          <p class="price" style="margin-top:0">{d.preis != null ? <>{eur(d.preis)} <small>{d.preisEinheit}</small></> : <>Preis auf Anfrage</>}</p>
+          <p class="small">{d.preisHinweis}</p>
+          {isService ? (
+            <div class="btns"><button class="btn btn--pri btn--lg" type="button" data-modal data-leistung={d.title.includes('Absaugung') ? 'Absaugung vor Ort' : 'Mineralwolle entsorgen'} data-variante={d.title.includes('Abholung') ? 'Abholung' : d.title.includes('Absaugung') ? 'Absaugung' : 'Anlieferung'} data-track="cta_click" data-label={`pdp:${d.title}`}>Jetzt anfragen <Icon name="arrow" class="icon--arr" /></button><a class="tlink" href="/entsorgung/#rechner">Kosten berechnen <Icon name="arrow" /></a></div>
+          ) : (
+            <>
+              {d.varianten && d.varianten.length > 0 && (
+                <div class="field"><label for="variant">Ausführung</label><select id="variant" data-variant>{d.varianten.map((v) => <option value={v.name}>{v.name}{v.info ? ` – ${v.info}` : ''}</option>)}</select></div>
+              )}
+              <div class="btns">
+                <span class="qty"><button type="button" data-q="-1" aria-label="Weniger">−</button><input type="number" min="1" value="1" data-qty aria-label={`Menge (${d.einheit})`} /><button type="button" data-q="1" aria-label="Mehr">+</button></span>
+                <button class="btn btn--pri btn--lg" type="button" data-add data-id={p.id} data-title={d.title} data-price={d.preis ?? ''} data-unit={d.einheit} style="flex:1"><Icon name="cart" />In den Warenkorb</button>
+              </div>
+              <p class="small" style="margin:12px 0 0">Einheit: {d.einheit} · Bestellanfrage unverbindlich · Zahlung nach Rechnung</p>
+            </>
+          )}
+        </div>
+        <div class="btns"><a class="tlink" href={`tel:${s.telefonLink}`} data-track="phone_click" data-label="pdp"><Icon name="phone" />Lieber anrufen: {s.telefon}</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap layout">
+      <div>
+        <h2>Beschreibung</h2>
+        <div class="prose"><Content /></div>
+        {d.anwendung && <><h3 style="margin-top:28px">Geeignet für</h3><ul class="chips">{d.anwendung.map((a) => <li><span class="chip chip--w">{a}</span></li>)}</ul></>}
+        {d.daten && <><h3 style="margin-top:28px">Technische Daten</h3><dl class="dl">{d.daten.map((x) => <><dt>{x.label}</dt><dd>{x.wert}</dd></>)}</dl></>}
+        {d.varianten && d.varianten.length > 0 && <>
+          <h3 style="margin-top:28px">Abmessungen & Verpackung</h3>
+          <div class="tbl-w"><table style="min-width:0"><thead><tr><th>Ausführung</th><th>Details</th></tr></thead><tbody>{d.varianten.map((v) => <tr><th scope="row">{v.name}</th><td>{v.info}</td></tr>)}</tbody></table></div>
+        </>}
+        {d.quelle && d.marke === 'Thermowool' && <p class="src">Technische Angaben laut Hersteller Thermowool (<a href={d.quelle} rel="noopener nofollow">Produktdatenblatt</a>). Angaben ohne Gewähr, maßgeblich ist das aktuelle Datenblatt.</p>}
+      </div>
+      <aside class="aside">
+        <div class="card card--sh">
+          <span class="badge badge--acc">Tipp</span>
+          {d.kategorie === 'entsorgung'
+            ? <><h3 style="margin-top:10px">Neue Dämmung gleich mitbestellen</h3><p class="small">Wenn die alte Wolle draußen ist: Glaswolle für Dach, Decke und Wand gibt es im selben Shop.</p><a class="btn btn--sec btn--block" href="/shop/?kat=hochbau">Dämmstoffe ansehen</a></>
+            : <><h3 style="margin-top:10px">Alte Dämmung? Wir nehmen sie mit.</h3><p class="small">Glas- und Steinwolle entsorgen ab 1,50 €/kg nach Gewicht – Sammelsäcke einfach mitbestellen.</p><a class="btn btn--sec btn--block" href="/shop/sammelsack-mineralwolle/">Sammelsäcke ansehen</a></>}
+          <button class="tlink" type="button" data-modal data-track="cta_click" data-label="pdp-aside" style="margin-top:8px">Beratung anfragen <Icon name="arrow" /></button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Fragen zum Produkt" title="Gut zu wissen" />
+      <Faq items={pfaq} />
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <Head eyebrow="Passt dazu" title="Das könnte Sie auch interessieren" />
+      <div class="grid g3">{related.map((r) => <ProductCard p={r} />)}</div>
+    </div>
+  </section>
+</Base>

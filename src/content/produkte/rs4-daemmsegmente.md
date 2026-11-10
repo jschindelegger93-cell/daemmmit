@@ -1,0 +1,52 @@
+---
+title: "RS4 Dämmsegmente mit Alufolie"
+typ: "produkt"
+kategorie: "technik"
+marke: "Thermowool"
+kurz: "Steinwolle-Dämmsegmente mit Aluminiumfolie für Tanks und Rohrleitungen mit großem Durchmesser."
+bild: "../../assets/img/produkte/rs4.jpg"
+anwendung:
+  - "Tanks und Behälter"
+  - "Rohrleitungen mit großem Durchmesser"
+vorteile:
+  - "λ = 0,040 W/mK"
+  - "Bis 250 °C einsetzbar"
+  - "Montage ohne Zusatzkonstruktion"
+  - "Sonderabmessungen projektbezogen"
+daten:
+  - label: "Wärmeleitfähigkeit λ"
+    wert: "0,040 W/(m·K) (DIN 52613 / EN ISO 8497)"
+  - label: "Brandverhalten"
+    wert: "A2, nicht brennbar (DIN EN 13501-1)"
+  - label: "Max. Anwendungstemperatur"
+    wert: "250 °C"
+  - label: "Rohdichte"
+    wert: "80 kg/m³"
+  - label: "Breite"
+    wert: "1200 mm"
+varianten:
+  - name: "80 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "100 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "120 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "130 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "140 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "160 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "180 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+  - name: "200 mm"
+    info: "Länge 2700–5300 mm je nach Dicke"
+einheit: "Paket"
+preisHinweis: "Verbindlicher Preis im persönlichen Angebot – abhängig von Menge und Dicke"
+top: false
+sort: 140
+quelle: "https://www.thermowool.at/produkt/warmedammsegmente/"
+seoTitle: "RS4 Dämmsegmente mit Alufolie kaufen | Dämm-Mit Stockerau"
+seoDescription: "Steinwolle-Dämmsegmente mit Aluminiumfolie für Tanks und Rohrleitungen mit großem Durchmesser. Jetzt bei Dämm-Mit anfragen."
+---
+RS4 Dämmsegmente legen sich um große Radien. Sonderabmessungen sind möglich und werden projektbezogen bestellt.

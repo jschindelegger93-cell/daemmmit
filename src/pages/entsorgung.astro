@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Head from '../components/Head.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import Rechner from '../components/Rechner.astro';
+import Vergleich from '../components/Vergleich.astro';
+import Cta from '../components/Cta.astro';
+import s from '../data/settings.json';
+import faq from '../data/faq.json';
+import saug from '../assets/img/site/absauggeraet.png';
+const crumbs = [{ name: 'Entsorgung', url: '/entsorgung/' }];
+const items = [...faq.gruppen[0].fragen, ...faq.gruppen[1].fragen];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Entsorgung und Recycling von Mineralwolle', serviceType: 'Mineralwolle-Entsorgung (Glaswolle, Steinwolle, KMF)', provider: { '@id': new URL('/#organisation', Astro.site).href }, areaServed: s.einzugsgebiet,
+    offers: [
+      { '@type': 'Offer', name: 'Anlieferung zur Sammelstelle Stockerau', priceSpecification: { '@type': 'UnitPriceSpecification', price: 1.5, priceCurrency: 'EUR', unitCode: 'KGM', valueAddedTaxIncluded: true } },
+      { '@type': 'Offer', name: 'Abholung in Sammelsäcken', priceSpecification: { '@type': 'UnitPriceSpecification', price: 1.5, priceCurrency: 'EUR', unitCode: 'KGM', valueAddedTaxIncluded: true }, description: 'zuzüglich Abholung, Richtpreis 1,20 €/km von/nach Stockerau' } ] },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })) },
+];
+---
+<Base title="Glaswolle & Steinwolle entsorgen: 1,50 €/kg | MIN-REC Stockerau" description="Mineralwolle richtig entsorgen: Anlieferung in Stockerau, Abholung in einer Woche oder Absaugung vor Ort. Abrechnung nach Gewicht, 1,50 €/kg für Private." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="MIN-REC Mineralwolle-Recycling" title="Glaswolle und Steinwolle richtig entsorgen"
+    answer="MIN-REC sammelt Glaswolle, Steinwolle und TEL-Wolle von Privat- und Gewerbekunden in Stockerau – alt oder neu. Privatkunden zahlen 1,50 € pro kg verwogenem Material inkl. MwSt. Sie liefern an, wir holen innerhalb einer Woche ab, oder wir saugen größere Mengen vor Ort ab."
+    facts={['1,50 €/kg verwogen, inkl. MwSt.', 'Abholung innerhalb einer Woche', 'Alt oder neu, alle Fabrikate']}>
+    <div class="btns" style="margin-top:22px">
+      <button class="btn btn--pri btn--lg" type="button" data-modal data-leistung="Mineralwolle entsorgen" data-track="cta_click" data-label="entsorgung-hero">Entsorgung anfragen <Icon name="arrow" class="icon--arr" /></button>
+      <a class="btn btn--out btn--lg" href="#rechner">Kosten berechnen</a>
+    </div>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Preise für Privatkunden" title="Drei Varianten, transparent verrechnet" />
+      <div class="tbl-w reveal">
+        <table>
+          <thead><tr><th>Variante</th><th>Leistung</th><th>Preis</th><th></th></tr></thead>
+          <tbody>
+            <tr><th scope="row">1 · Anlieferung</th><td>Sie bringen die gefüllten Sammelsäcke nach Vereinbarung nach Stockerau.</td><td><b>1,50 €/kg</b> verwogen, inkl. MwSt.</td><td><a class="tlink" href="/shop/entsorgung-anlieferung/">Details <Icon name="arrow" /></a></td></tr>
+            <tr><th scope="row">2 · Abholung</th><td>Wir holen die Säcke innerhalb einer Woche bei Ihnen ab.</td><td><b>1,50 €/kg</b> + Abholung (Richtpreis 1,20 €/km von/nach Stockerau)</td><td><a class="tlink" href="/shop/entsorgung-abholung/">Details <Icon name="arrow" /></a></td></tr>
+            <tr><th scope="row">3 · Absaugung <span class="badge badge--dark">in Vorbereitung</span></th><td>Für größere Mengen: Wir saugen vor Ort ab, wiegen und nehmen mit.</td><td><b>1,50 €/kg</b> + Absaugung (Stundenaufwand) + Anfahrt (1,20 €/km)</td><td><a class="tlink" href="/shop/entsorgung-absaugung/">Details <Icon name="arrow" /></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="swipe">← Tabelle seitlich wischen →</p>
+      <div class="grid g2" style="margin-top:24px">
+        <div class="box box--acc"><h3><Icon name="alert" /> Sortenrein trennen</h3><p style="margin:0">Glaswolle ist gelblich, hell, leicht und langfasrig. Steinwolle ist grünlich bis grau, kurzfasrig und meist in Platten. <b>Gemischtes Material kostet 50 % Aufschlag.</b> <a href="/ratgeber/glaswolle-oder-steinwolle-erkennen/">So erkennen Sie den Unterschied</a>.</p></div>
+        <div class="box"><h3><Icon name="bag" /> Nur in unseren Sammelsäcken</h3><p style="margin:0">Wir übernehmen Mineralwolle ausschließlich in MIN-REC Sammelsäcken. Die Entsorgungskosten ergeben sich aus dem tatsächlichen Gewicht. <a href="/shop/sammelsack-mineralwolle/">Säcke bestellen</a>.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt" id="rechner">
+    <div class="wrap">
+      <Head eyebrow="Gratis-Rechner" title="Kosten in 30 Sekunden schätzen" />
+      <Rechner />
+    </div>
+  </section>
+
+  <section class="sec" id="ablauf">
+    <div class="wrap">
+      <Head eyebrow="So läuft's ab" title="Vom Dachboden bis zur Waage" center />
+      <ol class="steps">
+        <li><h3>Säcke bestellen</h3><p>Im Shop oder telefonisch. Wir sagen Ihnen, wie viele Sie etwa brauchen.</p><span class="hl">2 Minuten</span></li>
+        <li><h3>Ausbauen & einsacken</h3><p>Mit Maske, Brille und Handschuhen. Glas- und Steinwolle getrennt.</p><span class="hl">Sortenrein = günstiger</span></li>
+        <li><h3>Termin vereinbaren</h3><p>Anlieferung in Stockerau oder Abholung bei Ihnen – wir brauchen nur die Adresse.</p><span class="hl">Abholung in 1 Woche</span></li>
+        <li><h3>Wiegen & Rechnung</h3><p>Jeder Sack kommt auf die Waage. Sie zahlen das verwogene Gewicht.</p><span class="hl">Bezahlung nach Rechnung</span></li>
+      </ol>
+      <div class="btns" style="justify-content:center;margin-top:36px"><a class="btn btn--sec" href="/shop/sammelsack-mineralwolle/">Sammelsäcke bestellen</a><a class="tlink" href="/ratgeber/alte-mineralwolle-sicher-ausbauen/">Anleitung: sicher ausbauen <Icon name="arrow" /></a></div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap split">
+      <figure class="figure" style="margin:0;padding:20px"><Image src={saug} alt="Mobiles Absauggerät auf Anhänger" widths={[321]} /><figcaption>Mobiles Saugen: Absaugung größerer Mengen direkt vor Ort (in Vorbereitung)</figcaption></figure>
+      <div>
+        <p class="eyebrow">Für größere Mengen</p>
+        <h2>Absaugen statt einsacken</h2>
+        <p>Lose Dämmung am Dachboden, viele Kubikmeter, wenig Zeit: Bei Variante 3 kommen wir mit dem mobilen Sauggerät, saugen ab, wiegen vor Ort und nehmen alles mit.</p>
+        <ul class="checks" style="margin-bottom:22px"><li><Icon name="check" />Entsorgung nach kg</li><li><Icon name="check" />Absaugung nach Stundenaufwand</li><li><Icon name="check" />Anfahrt: Richtpreis 1,20 €/km</li></ul>
+        <button class="btn btn--sec" type="button" data-modal data-leistung="Absaugung vor Ort" data-variante="Absaugung" data-track="cta_click" data-label="absaugung">Projekt jetzt vormerken</button>
+        <p class="small" style="margin-top:14px">Zum sauberen Zuschneiden der neuen Dämmung: <a href="/shop/schneidgeraet-miete/">Schneidgerät mit Absaugung, 50 €/Tag</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Head eyebrow="Vergleich" title="Warum nach Gewicht fairer ist" text="Manche Anbieter verkaufen Big Bags oder PE-Säcke zum Pauschalpreis – ohne dass klar ist, was ein Kilo kostet. Wir rechnen nach verwogenem Gewicht ab, auch bei Abholung und Absaugung." />
+      <Vergleich />
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <Head eyebrow="Häufige Fragen" title="Fragen zur Entsorgung" />
+      <Faq items={items} />
+    </div>
+  </section>
+  <Cta label="entsorgung-abschluss" />
+</Base>

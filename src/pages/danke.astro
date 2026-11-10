@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import s from '../data/settings.json';
+---
+<Base title="Danke für Ihre Anfrage | Dämm-Mit" description="Ihre Anfrage ist bei uns eingegangen." noindex>
+  <section class="sec"><div class="wrap" style="text-align:center;max-width:720px">
+    <span class="avatar" style="width:80px;height:80px;font-size:1.6rem;margin:0 auto 18px">{s.initialen}</span>
+    <h1>Danke – wir haben Ihre Anfrage.</h1>
+    <p class="lead" style="margin-inline:auto">{s.geschaeftsfuehrer} meldet sich persönlich {s.antwortzeit} mit einer Einschätzung bzw. Ihrem Angebot.</p>
+    <ol class="steps" style="text-align:left;margin:36px 0;grid-template-columns:1fr"><li style="padding:0 0 0 68px"><h3>Wir prüfen Ihre Angaben</h3><p>Material, Menge, Ort.</p></li><li style="padding:0 0 0 68px"><h3>Sie erhalten Ihr Angebot</h3><p>Mit verbindlichem Preis und Terminvorschlag.</p></li><li style="padding:0 0 0 68px"><h3>Bezahlung nach Rechnung</h3><p>Erst wenn alles erledigt ist.</p></li></ol>
+    <div class="btns" style="justify-content:center"><a class="btn btn--sec" href="/">Zur Startseite</a><a class="btn btn--out" href="/ratgeber/">Zum Ratgeber</a></div>
+    <p class="small" style="margin:20px auto 0">Dringend? <a href={`tel:${s.telefonLink}`}><Icon name="phone" class="" /> {s.telefon}</a></p>
+  </div></section>
+</Base>

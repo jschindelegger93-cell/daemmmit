@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import s from '../data/settings.json';
+const crumbs = [{ name: 'Shop', url: '/shop/' }, { name: 'Warenkorb', url: '/warenkorb/' }];
+---
+<Base title="Warenkorb & Bestellanfrage | Dämm-Mit" description="Ihr Warenkorb bei Dämm-Mit: Bestellanfrage absenden, persönliches Angebot erhalten, nach Rechnung bezahlen." crumbs={crumbs} noindex>
+  <PageHero crumbs={crumbs} eyebrow="Warenkorb" title="Ihre Bestellanfrage" facts={['Unverbindlich anfragen', 'Angebot mit verbindlichem Preis', 'Zahlung nach Rechnung']} />
+  <section class="sec" style="padding-top:32px" data-cart>
+    <div class="wrap">
+      <div class="empty" data-cart-empty><h2>Ihr Warenkorb ist leer</h2><p style="margin-inline:auto">Sammelsäcke, Mietgerät oder Dämmstoffe finden Sie im Shop.</p><div class="btns" style="justify-content:center"><a class="btn btn--pri" href="/shop/">Zum Shop</a><button class="btn btn--out" type="button" data-modal>Beratung anfragen</button></div></div>
+      <div class="layout" data-cart-full hidden>
+        <div>
+          <h2>Ihre Auswahl</h2>
+          <div data-cart-list></div>
+          <div class="sum"><span>Bekannte Summe</span><span data-cart-sum>–</span></div>
+          <p class="small">Preise inkl. MwSt., zzgl. Lieferung. Positionen „auf Anfrage“ und die Entsorgung nach Gewicht werden im Angebot ergänzt.</p>
+          <div class="box" style="margin-top:20px"><b>Alte Dämmung dabei?</b> <span class="small">Sammelsäcke nicht vergessen – wir übernehmen Mineralwolle nur in MIN-REC Säcken. <a href="/shop/sammelsack-mineralwolle/">Säcke hinzufügen</a></span></div>
+        </div>
+        <aside class="aside">
+          <form class="card card--sh" name="bestellung" method="POST" action="/danke/" data-netlify="true" netlify-honeypot="bot-field" data-ajax>
+            <input type="hidden" name="form-name" value="bestellung" />
+            <p class="hp"><label>Nicht ausfüllen: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+            <textarea name="bestellung" hidden></textarea><input type="hidden" name="summe_bekannt" />
+            <h3>Kontakt & Lieferung</h3>
+            <div class="field"><label for="b-name">Name *</label><input id="b-name" name="name" type="text" autocomplete="name" required /></div>
+            <div class="field"><label for="b-firma">Firma <small>(optional)</small></label><input id="b-firma" name="firma" type="text" autocomplete="organization" /></div>
+            <div class="field"><label for="b-tel">Telefon *</label><input id="b-tel" name="telefon" type="tel" inputmode="tel" autocomplete="tel" required /></div>
+            <div class="field"><label for="b-mail">E-Mail *</label><input id="b-mail" name="email" type="email" inputmode="email" autocomplete="email" required /></div>
+            <p class="flabel">Übergabe</p>
+            <div class="seg" style="margin-bottom:16px"><label><input type="radio" name="uebergabe" value="Abholung in Stockerau" checked /><span>Abholung Stockerau</span></label><label><input type="radio" name="uebergabe" value="Lieferung" /><span>Lieferung</span></label></div>
+            <div class="field"><label for="b-adr">Adresse / PLZ Ort</label><input id="b-adr" name="adresse" type="text" autocomplete="street-address" /></div>
+            <div class="field"><label for="b-msg">Anmerkung</label><textarea id="b-msg" name="nachricht" placeholder="z. B. Wunschtermin, alte Dämmung zum Mitnehmen"></textarea></div>
+            <label class="check"><input type="checkbox" name="datenschutz" value="ja" required /><span>Ich habe die <a href="/agb/" target="_blank">AGB</a> und die <a href="/datenschutz/" target="_blank">Datenschutzerklärung</a> gelesen.</span></label>
+            <p class="err" role="alert" data-err></p>
+            <button class="btn btn--pri btn--lg btn--block" type="submit">Bestellanfrage senden <Icon name="arrow" class="icon--arr" /></button>
+            <p class="small" style="text-align:center;margin:10px 0 0"><Icon name="lock" class="" /> SSL-verschlüsselt · Antwort {s.antwortzeit}</p>
+          </form>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>

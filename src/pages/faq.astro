@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import faq from '../data/faq.json';
+const crumbs = [{ name: 'FAQ', url: '/faq/' }];
+const all = faq.gruppen.flatMap((g) => g.fragen).filter((f) => !f.antwort.includes('[PLATZHALTER'));
+const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: all.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })) }];
+---
+<Base title="FAQ: Mineralwolle entsorgen, Kosten & Shop | Dämm-Mit" description="Antworten auf die häufigsten Fragen: Kosten pro kg, Ablauf, Sammelsäcke, Sortenreinheit, Deponieverbot 2027, Bestellung und Gewerbepreise." crumbs={crumbs} schema={schema}>
+  <PageHero crumbs={crumbs} eyebrow="Fragen & Antworten" title="Häufige Fragen"
+    answer="Die Entsorgung von Mineralwolle kostet bei MIN-REC 1,50 €/kg für Privatkunden, verwogen und inkl. MwSt. Angenommen wird Glaswolle und Steinwolle in unseren Sammelsäcken – sortenrein, alt oder neu.">
+    <div class="field" style="max-width:520px;margin-top:22px"><label for="fs">Frage suchen</label><input id="fs" type="text" placeholder="z. B. Abholung, Kosten, Steinwolle" data-faq-search /></div>
+  </PageHero>
+  <section class="sec" style="padding-top:40px">
+    <div class="wrap">
+      {faq.gruppen.map((g) => <div data-faq-group style="margin-bottom:36px"><h2 style="font-size:1.5rem">{g.titel}</h2><Faq items={g.fragen} /></div>)}
+      <p data-faq-none hidden>Keine passende Frage gefunden. <button class="tlink" type="button" data-modal>Fragen Sie uns direkt</button></p>
+    </div>
+  </section>
+  <Cta title="Ihre Frage war nicht dabei?" label="faq-abschluss" />
+</Base>

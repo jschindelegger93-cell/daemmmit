@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+const { title, slug } = Astro.props;
+const crumbs = [{ name: title, url: `/${slug}/` }];
+---
+<Base title={`${title} | Dämm-Mit EA GmbH`} description={`${title} der Dämm-Mit EA GmbH, Windparkstraße 8, 2000 Stockerau.`} crumbs={crumbs}>
+  <PageHero crumbs={crumbs} title={title} />
+  <section class="sec" style="padding-top:32px"><div class="wrap prose"><slot /></div></section>
+</Base>
